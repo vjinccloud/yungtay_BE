@@ -1,0 +1,30 @@
+* text=auto eol=lf
+
+# 合併策略設定：保留客戶版本的特定檔案
+# 因為客戶版需要忽略更多內部開發檔案（docs/、.claude/、CLAUDE.md 等）
+.gitignore merge=ours
+.gitattributes merge=ours
+CLAUDE.md merge=ours
+CLAUDE.local.md merge=ours
+KNOWN_ISSUES.md merge=ours
+
+# 內部文件目錄：merge 時自動忽略開發版本的變更
+docs/** merge=ours
+.claude/** merge=ours
+
+# Diff 屬性設定（更好的差異顯示）
+*.blade.php diff=html
+*.css diff=css
+*.html diff=html
+*.md diff=markdown
+*.php diff=php
+
+# Export ignore 設定（產生發布版本時排除）
+/.github export-ignore
+/docs export-ignore
+/.claude export-ignore
+CLAUDE.md export-ignore
+CLAUDE.local.md export-ignore
+KNOWN_ISSUES.md export-ignore
+CHANGELOG.md export-ignore
+.styleci.yml export-ignore

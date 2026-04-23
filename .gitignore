@@ -1,0 +1,51 @@
+/.phpunit.cache
+/node_modules
+/public/hot
+/public/storage
+/public/uploads
+/public/build
+/storage/*.key
+/vendor
+.env
+.env.backup
+.env.production
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+auth.json
+npm-debug.log
+yarn-error.log
+/.fleet
+/.idea
+/.vscode
+userfiles
+resources/js/ziggy.js
+/.idea, /.vscode
+composer.lock
+
+# === 客戶版本排除檔案 ===
+/docs
+.claude/
+CLAUDE.md
+CLAUDE.local.md
+deployment-*.md
+cicd-setup-guide.md
+
+# 其他內部文件
+*.internal.md
+/config/development.php
+build-stats.html
+
+# Claude settings
+.claude/settings.local.json
+
+# Redis 開發工具
+start-redis.bat
+stop-redis.bat
+
+# 暫存檔案
+/temp/
+dump.rdb
+
+# Known Issues (internal only)
+KNOWN_ISSUES.md

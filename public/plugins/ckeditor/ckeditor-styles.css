@@ -1,0 +1,256 @@
+/*
+ * CKEditor 5 (v12.3.1) content styles.
+ * Generated on Mon, 19 Aug 2019 12:01:17 GMT.
+ * For more information, check out https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/content-styles.html
+ */
+
+:root {
+  --ck-z-default: 100 !important;
+  --ck-z-modal: calc( var(--ck-z-default) + 999 ) !important;
+  --ck-image-style-spacing: 1.5em;
+}
+
+/* ckeditor5-image/theme/image.css */
+.ck.ck-editor__main {
+  line-height: 1.2;
+  overflow: auto;
+  height: 200px;
+  z-index: 0 !important;
+}
+
+.ck.ck-sticky-panel .ck-sticky-panel__content_sticky {
+  position: static !important;
+  z-index: 0 !important;
+}
+
+.ck.ck-editor .ck-editor__top .ck-sticky-panel .ck-toolbar {
+  z-index: 0 !important;
+}
+
+.ck.ck-editor__editable_inline {
+  overflow: auto;
+  height: 200px;
+}
+
+
+.ck-content {
+  min-height: 200px;
+}
+
+.ck-content a {
+  color: blue !important;
+  text-decoration: underline !important;
+}
+
+.ck-content a:hover {
+  text-decoration: underline !important;
+}
+
+.ck.ck-content.ck-editor__editable ul,
+.ck-content ul,
+.ck.ck-content.ck-editor__editable ol,
+.ck-content ol {
+  padding: 0 0 0 20px;
+}
+.ck-content ul,.ck-content ul li{
+  list-style: inherit;
+}
+.ck-content ol,.ck-content ol li {
+  list-style: decimal;
+}
+
+.ck-content .image {
+  display: table;
+  clear: both;
+  text-align: center;
+  margin: 1em auto
+}
+
+/* ckeditor5-image/theme/image.css */
+.ck-content img {
+  display: block;
+  margin: 0 auto;
+  max-width:100% !important;
+  height:auto !important;
+  min-width: 50px;
+}
+
+/* ckeditor5-image/theme/imagecaption.css */
+.ck-content .image>figcaption {
+  display: table-caption;
+  caption-side: bottom;
+  word-break: break-word;
+  color: hsl(0, 0%, 20%);
+  background-color: hsl(0, 0%, 97%);
+  padding: .6em;
+  font-size: .75em;
+  outline-offset: -1px;
+}
+
+/* ckeditor5-image/theme/imageresize.css */
+.ck-content .image.image_resized {
+  max-width: 100%;
+  display: block;
+  box-sizing: border-box
+}
+
+/* ckeditor5-image/theme/imageresize.css */
+.ck-content .image.image_resized img {
+  width: 100%;
+}
+
+/* ckeditor5-image/theme/imageresize.css */
+.ck-content .image.image_resized>figcaption {
+  display: block;
+}
+
+/* ckeditor5-media-embed/theme/mediaembed.css */
+.ck-content .media {
+  clear: both;
+  margin: 1em 0;
+  display: block;
+  min-width: 15em;
+}
+
+/* ckeditor5-table/theme/table.css */
+.ck-content .table {
+  margin: 1em auto;
+  display: table
+}
+
+/* ckeditor5-table/theme/table.css */
+.ck-content  table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  border: 1px double hsl(0, 0%, 70%);
+  width: 100%;
+}
+
+.ck-content  table p {
+  margin-bottom: 0;
+}
+
+/* ckeditor5-table/theme/table.css */
+.ck-content  table td,
+.ck-content  table th {
+  min-width: 2em;
+  padding: 15px;
+  border-color: hsl(0, 0%, 85%);
+  border: 1px solid #cccccc;
+}
+
+/* ckeditor5-table/theme/table.css */
+.ck-content  table td,
+.ck-content  table th {
+  min-width: 2em;
+  padding: 15px;
+  border-color: hsl(0, 0%, 85%);
+}
+
+/* ckeditor5-table/theme/table.css */
+.ck-content .table table th {
+  font-weight: bold;
+  background: hsl(0, 0%, 98%);
+}
+
+/* ckeditor5-basic-styles/theme/code.css */
+.ck-content code {
+  background-color: hsla(0, 0%, 78%, 0.3);
+  padding: .15em;
+  border-radius: 2px;
+}
+
+/* ckeditor5-image/theme/imagestyle.css */
+.ck-content .image-style-side:not(.image_resized),
+.ck-content .image-style-align-left:not(.image_resized),
+.ck-content .image-style-align-center:not(.image_resized),
+.ck-content .image-style-align-right:not(.image_resized) {
+  max-width: 50%;
+}
+
+/* ckeditor5-image/theme/imagestyle.css */
+.ck-content .image-style-side:not(.image_resized),
+.ck-content .image-style-align-left:not(.image_resized),
+.ck-content .image-style-align-center:not(.image_resized),
+.ck-content .image-style-align-right:not(.image_resized) {
+  max-width: 50%;
+}
+
+/* ckeditor5-image/theme/imagestyle.css */
+.ck-content .image-style-side:not(.image_resized),
+.ck-content .image-style-align-left:not(.image_resized),
+.ck-content .image-style-align-center:not(.image_resized),
+.ck-content .image-style-align-right:not(.image_resized) {
+  max-width: 50%;
+}
+
+/* ckeditor5-image/theme/imagestyle.css */
+.ck-content .image-style-side:not(.image_resized),
+.ck-content .image-style-align-left:not(.image_resized),
+.ck-content .image-style-align-center:not(.image_resized),
+.ck-content .image-style-align-right:not(.image_resized) {
+  max-width: 50%;
+}
+
+/* ckeditor5-image/theme/imagestyle.css */
+.ck-content .image-style-side {
+  float: right;
+  margin-left: var(--ck-image-style-spacing);
+}
+
+/* ckeditor5-image/theme/imagestyle.css */
+.ck-content .image-style-align-left {
+  float: left;
+  margin-right: var(--ck-image-style-spacing);
+}
+
+/* ckeditor5-image/theme/imagestyle.css */
+.ck-content .image-style-align-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ckeditor5-image/theme/imagestyle.css */
+.ck-content .image-style-align-right {
+  float: right;
+  margin-left: var(--ck-image-style-spacing);
+}
+
+/* ckeditor5-block-quote/theme/blockquote.css */
+.ck-content blockquote {
+  overflow: hidden;
+  padding-right: 1.5em;
+  padding-left: 1.5em;
+  margin-left: 0;
+  margin-right: 0;
+  font-style: italic;
+  border-left: solid 5px hsl(0, 0%, 80%);
+}
+
+/* ckeditor5-block-quote/theme/blockquote.css */
+.ck-content[dir="rtl"] blockquote {
+  border-left: 0;
+  border-right: solid 5px hsl(0, 0%, 80%);
+}
+
+.custom-block-indent-a {
+  margin-left: 10%;
+}
+
+.custom-block-indent-b {
+  margin-left: 20%;
+}
+
+.custom-block-indent-c {
+  margin-left: 30%;
+}
+
+
+
+@media (max-width:991px) {
+  .ck-content iframe {
+    max-width: 100% !important;
+    /* width: 100% !important; */
+    height:auto !important;
+  }
+}

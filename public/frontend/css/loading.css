@@ -1,0 +1,68 @@
+/* Loading 效果樣式 */
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(17, 19, 25, 0.7) !important;
+  z-index: 9999;
+}
+
+.loading .dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading .dots span {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin: 0 5px;
+  background-color: #2CC0E2;
+  border-radius: 50%;
+  animation: dotsAnimate 1.4s ease-in-out infinite both;
+}
+
+.loading .dots span:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.loading .dots span:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+.loading .dots span:nth-child(3) {
+  animation-delay: 0;
+}
+
+/* 動畫效果 */
+@keyframes dotsAnimate {
+  0%, 80%, 100% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* 淡出效果 */
+.loading.fade-out {
+  animation: fadeOut 0.3s ease-out forwards;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}

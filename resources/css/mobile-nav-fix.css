@@ -1,0 +1,7 @@
+/* 手機版導航搜尋欄修復 - 對應原始樣板 */
+#mobile-nav .search form {
+    display: inline-flex !important;
+    align-items: center;
+    width: 100%;
+    height: auto;
+}

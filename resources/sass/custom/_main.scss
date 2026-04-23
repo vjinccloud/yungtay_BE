@@ -1,0 +1,31 @@
+//
+// Custom Main
+//
+// Add your own styles or override existing ones
+//
+// This file is included last, so you have access
+// to all Bootstrap and Codebase functions/mixins/styles etc
+// --------------------------------------------------
+
+// If you have many custom styles, you can create and import additional files
+// For example you can create _component1.scss and include it as follows:
+// @import 'component1';
+
+// Custom pink background color for badges
+.bg-pink {
+  background-color: #d63384 !important;
+  color: white !important;
+}
+
+// Hitachi Yungtay admin theme
+.sidebar-dark #sidebar .content-header {
+  background: #8B2332 !important;
+}
+.sidebar-dark #sidebar .content-header .text-dual,
+.sidebar-dark #sidebar .content-header .link-fx,
+.sidebar-dark #sidebar .content-header a {
+  color: #fff !important;
+}
+.sidebar-dark #sidebar .content-header .text-primary {
+  color: #fff !important;
+}

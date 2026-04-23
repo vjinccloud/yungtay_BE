@@ -1,0 +1,33 @@
+// 拖拽排序相關樣式
+.sortable {
+  &-ghost {
+    opacity: 0.4;
+    background: #f8f9fa;
+  }
+
+  &-chosen {
+    background: #e3f2fd;
+  }
+
+  &-drag {
+    background: #fff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  }
+
+  &-table {
+    tbody {
+      tr {
+        cursor: move;
+      }
+    }
+  }
+}
+
+// 拖拽手把樣式
+.sort-handle {
+  cursor: grab;
+
+  &:active {
+    cursor: grabbing;
+  }
+}
