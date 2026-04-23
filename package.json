@@ -1,0 +1,30 @@
+{
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@inertiajs/vue3": "^2.0",
+    "@primeuix/themes": "^1.0",
+    "axios": "^1.7",
+    "bootstrap": "^5.3",
+    "datatables.net-bs5": "^2.0",
+    "datatables.net-vue3": "^3.0",
+    "jquery": "^3.7",
+    "nanoid": "^5.0",
+    "primevue": "^4.0",
+    "simplebar": "^6.0",
+    "sortablejs": "^1.15",
+    "sweetalert2": "^11.0",
+    "vue": "^3.5",
+    "vuedraggable": "^4.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0",
+    "laravel-vite-plugin": "^1.0",
+    "sass": "^1.80",
+    "vite": "^6.0"
+  }
+}

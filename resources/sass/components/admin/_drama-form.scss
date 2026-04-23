@@ -1,0 +1,55 @@
+// resources/sass/components/_drama-form.scss
+// 簡單的影音表單樣式 - 使用 data 屬性避免衝突
+
+// Form.vue 的樣式
+[data-drama-form] {
+  .tab-content {
+    border: 1px solid var(--bs-border-color);
+    border-top: none;
+    border-radius: 0 0 0.375rem 0.375rem;
+    min-height: 400px;
+    
+    // 暗黑模式
+    .dark & {
+      border-color: rgba(255, 255, 255, 0.15);
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+  }
+  
+  .nav-tabs .nav-link.active {
+    background-color: var(--bs-body-bg);
+    border-color: var(--bs-border-color) var(--bs-border-color) var(--bs-body-bg);
+  }
+}
+
+// DramaBasicInfo.vue 的樣式
+[data-drama-basic] {
+  .content-heading {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--bs-heading-color);
+    border-bottom: 2px solid var(--bs-border-color);
+    padding-bottom: 8px;
+    margin-bottom: 1rem;
+  }
+  
+  .alert-success {
+    border-left: 4px solid var(--bs-success);
+  }
+}
+
+// DramaVideoUpload.vue 的樣式
+[data-drama-video] {
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    
+    .dark & {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+  }
+  
+  .alert-info {
+    border-left: 4px solid var(--bs-info);
+  }
+}

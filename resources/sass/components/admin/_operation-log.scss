@@ -1,0 +1,391 @@
+// components/_operation-log.scss
+// 操作日誌組件樣式 + 篩選清除按鈕樣式優化
+
+// ===== 操作日誌組件樣式 =====
+.operation-log {
+  width: 280px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'Microsoft JhengHei', Arial, sans-serif;
+
+  // 標題區域
+  .log-header {
+    background: linear-gradient(135deg, #2196F3, #1976D2);
+    color: white;
+    padding: 12px 16px;
+    text-align: center;
+
+    h3 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 500;
+    }
+  }
+
+  // 內容區域
+  .log-content {
+    padding: 0;
+    // 如果需要限制高度和捲動，取消註解下面兩行
+    // max-height: 400px;
+    // overflow-y: auto;
+
+    // 自定義滾動條樣式
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #c1c1c1;
+      border-radius: 2px;
+
+      &:hover {
+        background: #a8a8a8;
+      }
+    }
+  }
+
+  // 時間軸容器
+  .log-timeline {
+    position: relative;
+    padding: 16px 0 16px 32px;
+
+    // 時間軸線條
+    &::before {
+      content: '';
+      position: absolute;
+      left: 12px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: #e0e0e0;
+    }
+  }
+
+  // 日誌項目
+  .log-item {
+    position: relative;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: flex-start;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  // 時間軸圓點
+  .timeline-dot {
+    position: absolute;
+    left: -25px;
+    top: 4px;
+    width: 8px;
+    height: 8px;
+    background: #2196F3;
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0 0 0 2px #e0e0e0;
+  }
+
+  // 日誌詳細內容
+  .log-details {
+    flex: 1;
+    background: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border-left: 3px solid #2196F3;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  // 日誌 ID
+  .log-id {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 4px;
+    font-weight: 500;
+  }
+
+  // 日誌動作
+  .log-action {
+    font-size: 13px;
+    color: #333;
+    font-weight: 400;
+  }
+
+  // 底部區域
+  .log-footer {
+    background: #2196F3;
+    padding: 10px 16px;
+    text-align: center;
+  }
+
+  // 查看全部連結
+  .view-all-link {
+    color: white !important;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: opacity 0.2s;
+
+    &:hover {
+      opacity: 0.8;
+      text-decoration: underline;
+    }
+  }
+}
+
+// ===== 篩選清除按鈕樣式優化 =====
+// 針對篩選區域的清除按鈕
+.filter-section, .search-section {
+  
+  // 清除按鈕樣式
+  .btn-clear, 
+  .clear-filter,
+  [data-action="clear"],
+  .fa-times,
+  .fa-close,
+  .fa-remove {
+    color: #dc3545 !important; // 紅色讓它更明顯
+    background-color: rgba(220, 53, 69, 0.1) !important;
+    border: 1px solid rgba(220, 53, 69, 0.3) !important;
+    border-radius: 4px;
+    padding: 4px 8px;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      color: #fff !important;
+      background-color: #dc3545 !important;
+      border-color: #dc3545 !important;
+      transform: scale(1.05);
+    }
+    
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25) !important;
+    }
+  }
+  
+  // 如果是在 input-group 內的清除按鈕
+  .input-group {
+    .btn-outline-secondary {
+      &[data-action="clear"],
+      &.clear-filter {
+        color: #dc3545 !important;
+        border-color: rgba(220, 53, 69, 0.3) !important;
+        background-color: rgba(220, 53, 69, 0.05) !important;
+        
+        &:hover {
+          color: #fff !important;
+          background-color: #dc3545 !important;
+          border-color: #dc3545 !important;
+        }
+        
+        // 圖示樣式
+        i {
+          font-size: 14px;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}
+
+// 通用清除按鈕樣式 - 適用於各種場景
+.btn-clear-filter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 36px;
+  padding: 6px;
+  color: #dc3545 !important;
+  background-color: rgba(220, 53, 69, 0.1) !important;
+  border: 1px solid rgba(220, 53, 69, 0.3) !important;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  
+  &:hover {
+    color: #fff !important;
+    background-color: #dc3545 !important;
+    border-color: #dc3545 !important;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(220, 53, 69, 0.2);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+  
+  i {
+    font-size: 14px;
+    font-weight: 600;
+  }
+  
+  // 添加文字說明（可選）
+  &::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+  }
+  
+  &:hover::after {
+    opacity: 1;
+  }
+}
+
+// 如果您想要更明顯的動畫效果
+@keyframes clearButtonPulse {
+  0% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.4); }
+  70% { box-shadow: 0 0 0 8px rgba(220, 53, 69, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0); }
+}
+
+.btn-clear-filter.pulse {
+  animation: clearButtonPulse 1.5s infinite;
+}
+
+// ===== 深色模式支援 =====
+.dark {
+  // 操作日誌深色模式
+  .operation-log {
+    background: #2d3748;
+
+    .log-content {
+      &::-webkit-scrollbar-track {
+        background: #4a5568;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: #718096;
+
+        &:hover {
+          background: #a0aec0;
+        }
+      }
+    }
+
+    .log-timeline {
+      &::before {
+        background: #4a5568;
+      }
+    }
+
+    .log-details {
+      background: #374151;
+      color: #f7fafc;
+    }
+
+    .log-id {
+      color: #a0aec0;
+    }
+
+    .log-action {
+      color: #e2e8f0;
+    }
+  }
+
+  // 篩選清除按鈕深色模式
+  .filter-section, .search-section {
+    .btn-clear, 
+    .clear-filter,
+    [data-action="clear"],
+    .fa-times,
+    .fa-close,
+    .fa-remove {
+      color: #ff6b6b !important;
+      background-color: rgba(255, 107, 107, 0.15) !important;
+      border-color: rgba(255, 107, 107, 0.4) !important;
+      
+      &:hover {
+        color: #fff !important;
+        background-color: #ff6b6b !important;
+        border-color: #ff6b6b !important;
+      }
+    }
+    
+    .input-group {
+      .btn-outline-secondary {
+        &[data-action="clear"],
+        &.clear-filter {
+          color: #ff6b6b !important;
+          border-color: rgba(255, 107, 107, 0.4) !important;
+          background-color: rgba(255, 107, 107, 0.1) !important;
+          
+          &:hover {
+            color: #fff !important;
+            background-color: #ff6b6b !important;
+            border-color: #ff6b6b !important;
+          }
+        }
+      }
+    }
+  }
+
+  .btn-clear-filter {
+    color: #ff6b6b !important;
+    background-color: rgba(255, 107, 107, 0.15) !important;
+    border-color: rgba(255, 107, 107, 0.4) !important;
+    
+    &:hover {
+      color: #fff !important;
+      background-color: #ff6b6b !important;
+      border-color: #ff6b6b !important;
+    }
+  }
+}
+
+// Select2 清除按鈕強制顯示
+// ===== Select2 清除按鈕修正 =====
+.select2-container--bootstrap-5 .select2-selection--single .select2-selection__clear,
+.select2-container--bootstrap-5 .select2-selection--multiple .select2-selection__clear {
+  // 完全移除原始樣式
+  background: none !important;
+  background-image: none !important;
+  text-indent: 0 !important;
+  overflow: visible !important;
+  white-space: normal !important;
+  
+  // 隱藏原始內容
+  font-size: 0 !important;
+  
+  // 基本樣式
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 18px !important;
+  height: 18px !important;
+  
+  // 使用我們的符號
+  &::before {
+    content: '×' !important;
+    font-size: 14px !important;
+    color: #999 !important;
+    line-height: 1 !important;
+  }
+  
+  &:hover::before {
+    color: #dc3545 !important;
+  }
+  
+  // 隱藏任何子元素
+  > * {
+    display: none !important;
+  }
+}

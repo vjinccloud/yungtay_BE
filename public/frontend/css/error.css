@@ -1,0 +1,110 @@
+/* 錯誤頁面樣式 */
+.section-error-404,
+.section-error-403,
+.section-error-419,
+.section-error-500,
+.section-error-503 {
+  padding: 30px 0 80px 0;
+  background: #2B3238;
+  min-height: calc(100vh - 400px);
+}
+
+.section-error-404 .back,
+.section-error-403 .back,
+.section-error-419 .back,
+.section-error-500 .back,
+.section-error-503 .back {
+  font-size: 18px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.section-error-404 .back a,
+.section-error-403 .back a,
+.section-error-419 .back a,
+.section-error-500 .back a,
+.section-error-503 .back a {
+  color: #fff;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  transition: color 0.3s;
+}
+
+.section-error-404 .back a:hover,
+.section-error-403 .back a:hover,
+.section-error-419 .back a:hover,
+.section-error-500 .back a:hover,
+.section-error-503 .back a:hover {
+  color: #2CC0E2;
+}
+
+.section-error-404 .back i,
+.section-error-403 .back i,
+.section-error-419 .back i,
+.section-error-500 .back i,
+.section-error-503 .back i {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background-image: url(../images/icon_back_white.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  margin-right: 10px;
+}
+
+.section-error-404 .error,
+.section-error-403 .error,
+.section-error-419 .error,
+.section-error-500 .error,
+.section-error-503 .error {
+  text-align: center;
+  color: #fff;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 420px;
+}
+
+.section-error-404 .error h2,
+.section-error-403 .error h2,
+.section-error-419 .error h2,
+.section-error-500 .error h2,
+.section-error-503 .error h2 {
+  font-size: 100px;
+  font-weight: 700;
+  margin: 0 0 20px 0;
+  color: #2CC0E2;
+}
+
+.section-error-404 .error p,
+.section-error-403 .error p,
+.section-error-419 .error p,
+.section-error-500 .error p,
+.section-error-503 .error p {
+  font-size: 48px;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* 手機版響應式 */
+@media (max-width: 768px) {
+  .section-error-404 .error h2,
+  .section-error-403 .error h2,
+  .section-error-419 .error h2,
+  .section-error-500 .error h2,
+  .section-error-503 .error h2 {
+    font-size: 60px;
+  }
+  
+  .section-error-404 .error p,
+  .section-error-403 .error p,
+  .section-error-419 .error p,
+  .section-error-500 .error p,
+  .section-error-503 .error p {
+    font-size: 24px;
+  }
+}

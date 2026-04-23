@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>前台下單測試頁</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background: #f5f5f5; }
+        .product-card { cursor: pointer; transition: box-shadow .2s; }
+        .product-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,.15); }
+        .product-card.selected { border-color: #0d6efd; box-shadow: 0 0 0 3px rgba(13,110,253,.25); }
+        .cart-item { background: #f8f9fa; border-radius: 8px; padding: 12px 16px; margin-bottom: 8px; }
+        .step-indicator .step { display: inline-block; width: 36px; height: 36px; line-height: 36px; text-align: center; border-radius: 50%; background: #dee2e6; color: #fff; font-weight: bold; margin-right: 8px; }
+        .step-indicator .step.active { background: #0d6efd; }
+        .step-indicator .step.done { background: #198754; }
+        #result-section { display: none; }
+        .loading-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,.4); z-index: 9999; justify-content: center; align-items: center; }
+        .loading-overlay.show { display: flex; }
+    </style>
+</head>
+<body>
+    <!-- Loading -->
+    <div class="loading-overlay" id="loading">
+        <div class="spinner-border text-light" style="width: 3rem; height: 3rem;"></div>
+    </div>
+
+    <div class="container py-4" style="max-width: 900px;">
+        <h2 class="mb-4">🛒 前台下單測試</h2>
+
+        <!-- Step Indicator -->
+        <div class="step-indicator mb-4">
+            <span class="step active" id="step1-dot">1</span> 選擇商品
+            <span class="step ms-3" id="step2-dot">2</span> 填寫資料
+            <span class="step ms-3" id="step3-dot">3</span> 確認送出
+        </div>
+
+        <!-- ========== Step 1: 商品選擇 ========== -->
+        <div id="step1-section">
+            <div class="card mb-3">
+                <div class="card-header bg-primary text-white">
+                    <strong>商品列表</strong>
+                    <button class="btn btn-sm btn-light float-end" onclick="loadProducts()">🔄 重新載入</button>
+                </div>
+                <div class="card-body">
+                    <div id="products-container" class="row g-3">
+                        <p class="text-muted">載入中...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-3">
+                <div class="card-header"><strong>🛒 購物車</strong></div>
+                <div class="card-body" id="cart-container">
+                    <p class="text-muted" id="cart-empty">尚未選擇商品</p>
+                </div>
+                <div class="card-footer d-flex justify-content-between align-items-center">
+                    <span><strong>小計: <span id="cart-subtotal">$0</span></strong></span>
+                    <button class="btn btn-primary" onclick="goToStep2()" id="btn-next-step2" disabled>下一步 →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== Step 2: 買家/物流 ========== -->
+        <div id="step2-section" style="display:none;">
+            <div class="card mb-3">
+                <div class="card-header bg-primary text-white"><strong>買家資訊</strong></div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label">姓名 <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="buyer_name" value="測試買家">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">手機 <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="buyer_phone" value="0912345678">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" id="buyer_email" value="test@example.com">
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">備註</label>
+                            <textarea class="form-control" id="buyer_note" rows="2" placeholder="例：請在週末配送"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-3">
+                <div class="card-header bg-primary text-white"><strong>付款方式</strong></div>
+                <div class="card-body">
+                    <div class="d-flex flex-wrap gap-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="payment_method" value="credit_card" id="pm_credit" checked>
+                            <label class="form-check-label" for="pm_credit">💳 信用卡</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="payment_method" value="atm" id="pm_atm">
+                            <label class="form-check-label" for="pm_atm">🏧 ATM 轉帳</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="payment_method" value="cod" id="pm_cod">
+                            <label class="form-check-label" for="pm_cod">📦 貨到付款</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-3">
+                <div class="card-header bg-primary text-white"><strong>配送方式</strong></div>
+                <div class="card-body">
+                    <div class="d-flex flex-wrap gap-3 mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="shipping_method" value="home" id="sm_home" checked onchange="toggleShippingFields()">
+                            <label class="form-check-label" for="sm_home">🏠 宅配到府</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="shipping_method" value="cvs_711" id="sm_711" onchange="toggleShippingFields()">
+                            <label class="form-check-label" for="sm_711">🏪 7-11</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="shipping_method" value="cvs_family" id="sm_family" onchange="toggleShippingFields()">
+                            <label class="form-check-label" for="sm_family">🏪 全家</label>
+                        </div>
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label">收件人姓名 <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="receiver_name" value="測試買家">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">收件人電話 <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="receiver_phone" value="0912345678">
+                        </div>
+                    </div>
+
+                    <!-- 宅配欄位 -->
+                    <div id="home-fields" class="mt-3">
+                        <label class="form-label">收件地址 <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="receiver_address" value="台北市信義區松仁路100號">
+                    </div>
+
+                    <!-- 超取欄位 -->
+                    <div id="cvs-fields" class="mt-3" style="display:none;">
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label class="form-label">門市代號 <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="receiver_store_id" value="991182">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">門市名稱</label>
+                                <input type="text" class="form-control" id="receiver_store_name" value="新光門市">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <button class="btn btn-outline-secondary" onclick="goToStep1()">← 上一步</button>
+                <button class="btn btn-primary" onclick="goToStep3()">下一步 →</button>
+            </div>
+        </div>
+
+        <!-- ========== Step 3: 確認送出 ========== -->
+        <div id="step3-section" style="display:none;">
+            <div class="card mb-3">
+                <div class="card-header bg-success text-white"><strong>訂單確認</strong></div>
+                <div class="card-body">
+                    <div id="confirm-summary"></div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <button class="btn btn-outline-secondary" onclick="goToStep2FromStep3()">← 上一步</button>
+                <button class="btn btn-success btn-lg" onclick="submitOrder()" id="btn-submit">✅ 確認下單</button>
+            </div>
+        </div>
+
+        <!-- ========== 結果 ========== -->
+        <div id="result-section" class="mt-4">
+            <div class="card">
+                <div class="card-header bg-dark text-white"><strong>📋 下單結果</strong></div>
+                <div class="card-body" id="result-content"></div>
+            </div>
+            <div class="mt-3">
+                <button class="btn btn-primary" onclick="resetAll()">🔄 重新下單</button>
+                <button class="btn btn-outline-secondary ms-2" onclick="queryOrder()">🔍 查詢訂單</button>
+            </div>
+        </div>
+
+        <!-- 訂單查詢區塊 -->
+        <div id="query-section" class="mt-4" style="display:none;">
+            <div class="card">
+                <div class="card-header bg-info text-white"><strong>🔍 訂單查詢</strong></div>
+                <div class="card-body">
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-5">
+                            <label class="form-label">訂單編號</label>
+                            <input type="text" class="form-control" id="query_order_no">
+                        </div>
+                        <div class="col-md-5">
+                            <label class="form-label">手機號碼</label>
+                            <input type="text" class="form-control" id="query_phone" value="0912345678">
+                        </div>
+                        <div class="col-md-2 d-flex align-items-end">
+                            <button class="btn btn-info w-100" onclick="doQueryOrder()">查詢</button>
+                        </div>
+                    </div>
+                    <div id="query-result"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = '/api';
+        let products = [];
+        let cart = []; // { product_id, product_sku_id, name, sku_label, price, quantity }
+        let lastOrderNo = '';
+
+        // ==================== 初始化 ====================
+        document.addEventListener('DOMContentLoaded', () => {
+            loadProducts();
+        });
+
+        // ==================== 商品載入 ====================
+        async function loadProducts() {
+            showLoading();
+            try {
+                const res = await fetch(`${API_BASE}/v1/orders/products`);
+                const json = await res.json();
+                if (json.success) {
+                    products = json.data;
+                    renderProducts();
+                } else {
+                    document.getElementById('products-container').innerHTML =
+                        '<div class="alert alert-warning">無法載入商品列表</div>';
+                }
+            } catch (e) {
+                document.getElementById('products-container').innerHTML =
+                    `<div class="alert alert-danger">載入失敗: ${e.message}</div>`;
+            }
+            hideLoading();
+        }
+
+        function renderProducts() {
+            const container = document.getElementById('products-container');
+            if (products.length === 0) {
+                container.innerHTML = '<div class="alert alert-info">目前沒有上架商品</div>';
+                return;
+            }
+
+            container.innerHTML = products.map(p => {
+                const imgSrc = p.image ? `/storage/${p.image}` : 'https://placehold.co/200x200?text=No+Image';
+                const hasSkus = p.skus && p.skus.length > 0;
+                const skuOptions = hasSkus
+                    ? p.skus.map(s => `<option value="${s.id}" data-price="${s.price}" data-stock="${s.stock}">${s.combination_label || s.sku} - $${s.price} (庫存${s.stock})</option>`).join('')
+                    : '';
+
+                return `
+                    <div class="col-md-4 col-sm-6">
+                        <div class="card product-card h-100">
+                            <img src="${imgSrc}" class="card-img-top" style="height:160px; object-fit:cover;" alt="${p.name}">
+                            <div class="card-body">
+                                <h6 class="card-title">${p.name}</h6>
+                                <p class="text-primary fw-bold mb-2">$${p.price}</p>
+                                ${hasSkus ? `<select class="form-select form-select-sm mb-2" id="sku-select-${p.id}">${skuOptions}</select>` : ''}
+                                <div class="d-flex align-items-center gap-2">
+                                    <input type="number" class="form-control form-control-sm" value="1" min="1" max="99" style="width:70px" id="qty-${p.id}">
+                                    <button class="btn btn-sm btn-outline-primary flex-grow-1" onclick="addToCart(${p.id})">加入購物車</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // ==================== 購物車 ====================
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            const qty = parseInt(document.getElementById(`qty-${productId}`).value) || 1;
+            let skuId = null;
+            let price = product.price;
+            let skuLabel = '';
+
+            const skuSelect = document.getElementById(`sku-select-${productId}`);
+            if (skuSelect) {
+                skuId = parseInt(skuSelect.value);
+                const selectedOption = skuSelect.selectedOptions[0];
+                price = parseFloat(selectedOption.dataset.price);
+                skuLabel = selectedOption.text.split(' - ')[0];
+            }
+
+            // 檢查是否已在購物車
+            const existing = cart.find(c => c.product_id === productId && c.product_sku_id === skuId);
+            if (existing) {
+                existing.quantity += qty;
+            } else {
+                cart.push({
+                    product_id: productId,
+                    product_sku_id: skuId,
+                    name: product.name,
+                    sku_label: skuLabel,
+                    price: price,
+                    quantity: qty,
+                });
+            }
+
+            renderCart();
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            renderCart();
+        }
+
+        function updateCartQty(index, newQty) {
+            if (newQty < 1) {
+                removeFromCart(index);
+                return;
+            }
+            cart[index].quantity = parseInt(newQty);
+            renderCart();
+        }
+
+        function renderCart() {
+            const container = document.getElementById('cart-container');
+            const emptyMsg = document.getElementById('cart-empty');
+            const btnNext = document.getElementById('btn-next-step2');
+
+            if (cart.length === 0) {
+                container.innerHTML = '<p class="text-muted" id="cart-empty">尚未選擇商品</p>';
+                document.getElementById('cart-subtotal').textContent = '$0';
+                btnNext.disabled = true;
+                return;
+            }
+
+            btnNext.disabled = false;
+            let subtotal = 0;
+
+            container.innerHTML = cart.map((item, i) => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+                return `
+                    <div class="cart-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong>${item.name}</strong>
+                            ${item.sku_label ? `<small class="text-muted ms-1">(${item.sku_label})</small>` : ''}
+                            <br><small class="text-muted">$${item.price} × </small>
+                            <input type="number" value="${item.quantity}" min="1" max="99" style="width:60px" class="form-control form-control-sm d-inline-block" onchange="updateCartQty(${i}, this.value)">
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="fw-bold">$${itemTotal}</span>
+                            <button class="btn btn-sm btn-outline-danger" onclick="removeFromCart(${i})">✕</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('cart-subtotal').textContent = `$${subtotal}`;
+        }
+
+        // ==================== 步驟切換 ====================
+        function goToStep1() {
+            showStep(1);
+        }
+        function goToStep2() {
+            if (cart.length === 0) { alert('請先選擇商品'); return; }
+            showStep(2);
+        }
+        function goToStep2FromStep3() {
+            showStep(2);
+        }
+        function goToStep3() {
+            // 驗證
+            if (!document.getElementById('buyer_name').value.trim()) { alert('請填寫姓名'); return; }
+            if (!document.getElementById('buyer_phone').value.trim()) { alert('請填寫手機'); return; }
+            if (!document.getElementById('receiver_name').value.trim()) { alert('請填寫收件人姓名'); return; }
+            if (!document.getElementById('receiver_phone').value.trim()) { alert('請填寫收件人電話'); return; }
+
+            const sm = getSelectedRadio('shipping_method');
+            if (sm === 'home' && !document.getElementById('receiver_address').value.trim()) {
+                alert('宅配須填寫地址'); return;
+            }
+            if (['cvs_711', 'cvs_family', 'cvs_hilife'].includes(sm) && !document.getElementById('receiver_store_id').value.trim()) {
+                alert('超取須填寫門市代號'); return;
+            }
+
+            renderConfirmSummary();
+            showStep(3);
+        }
+
+        function showStep(n) {
+            document.getElementById('step1-section').style.display = n === 1 ? '' : 'none';
+            document.getElementById('step2-section').style.display = n === 2 ? '' : 'none';
+            document.getElementById('step3-section').style.display = n === 3 ? '' : 'none';
+
+            ['step1-dot', 'step2-dot', 'step3-dot'].forEach((id, i) => {
+                const dot = document.getElementById(id);
+                dot.className = 'step' + (i + 1 === n ? ' active' : (i + 1 < n ? ' done' : ''));
+            });
+        }
+
+        function toggleShippingFields() {
+            const sm = getSelectedRadio('shipping_method');
+            const isHome = sm === 'home';
+            document.getElementById('home-fields').style.display = isHome ? '' : 'none';
+            document.getElementById('cvs-fields').style.display = isHome ? 'none' : '';
+        }
+
+        function getSelectedRadio(name) {
+            return document.querySelector(`input[name="${name}"]:checked`)?.value || '';
+        }
+
+        // ==================== 確認摘要 ====================
+        function renderConfirmSummary() {
+            const pm = getSelectedRadio('payment_method');
+            const sm = getSelectedRadio('shipping_method');
+            const pmLabels = { credit_card: '信用卡', atm: 'ATM 轉帳', cvs: '超商代碼', cod: '貨到付款' };
+            const smLabels = { home: '宅配到府', cvs_711: '7-11 超商取貨', cvs_family: '全家超商取貨', cvs_hilife: '萊爾富超商取貨' };
+
+            let subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+            // 運費計算
+            let shippingFee = 0;
+            if (subtotal < 2000) {
+                shippingFee = sm === 'home' ? 100 : 60;
+            }
+            const total = subtotal + shippingFee;
+
+            let receiverInfo = '';
+            if (sm === 'home') {
+                receiverInfo = `地址: ${document.getElementById('receiver_address').value}`;
+            } else {
+                receiverInfo = `門市: ${document.getElementById('receiver_store_name').value} (${document.getElementById('receiver_store_id').value})`;
+            }
+
+            document.getElementById('confirm-summary').innerHTML = `
+                <table class="table table-bordered mb-0">
+                    <tr><th width="120">買家姓名</th><td>${document.getElementById('buyer_name').value}</td></tr>
+                    <tr><th>手機</th><td>${document.getElementById('buyer_phone').value}</td></tr>
+                    <tr><th>Email</th><td>${document.getElementById('buyer_email').value || '-'}</td></tr>
+                    <tr><th>付款方式</th><td>${pmLabels[pm] || pm}</td></tr>
+                    <tr><th>配送方式</th><td>${smLabels[sm] || sm}</td></tr>
+                    <tr><th>收件人</th><td>${document.getElementById('receiver_name').value} / ${document.getElementById('receiver_phone').value}</td></tr>
+                    <tr><th>收件資訊</th><td>${receiverInfo}</td></tr>
+                    <tr><th>商品</th><td>
+                        ${cart.map(item => `${item.name}${item.sku_label ? ` (${item.sku_label})` : ''} × ${item.quantity} = $${item.price * item.quantity}`).join('<br>')}
+                    </td></tr>
+                    <tr><th>小計</th><td>$${subtotal}</td></tr>
+                    <tr><th>運費</th><td>$${shippingFee}${subtotal >= 2000 ? ' <span class="badge bg-success">滿額免運</span>' : ''}</td></tr>
+                    <tr class="table-primary"><th>總計</th><td class="fw-bold fs-5">$${total}</td></tr>
+                </table>
+                ${document.getElementById('buyer_note').value ? `<div class="mt-2 text-muted">備註: ${document.getElementById('buyer_note').value}</div>` : ''}
+            `;
+        }
+
+        // ==================== 送出訂單 ====================
+        async function submitOrder() {
+            const btn = document.getElementById('btn-submit');
+            btn.disabled = true;
+            showLoading();
+
+            const sm = getSelectedRadio('shipping_method');
+            const payload = {
+                buyer_name: document.getElementById('buyer_name').value.trim(),
+                buyer_phone: document.getElementById('buyer_phone').value.trim(),
+                buyer_email: document.getElementById('buyer_email').value.trim() || null,
+                buyer_note: document.getElementById('buyer_note').value.trim() || null,
+                payment_method: getSelectedRadio('payment_method'),
+                shipping_method: sm,
+                receiver_name: document.getElementById('receiver_name').value.trim(),
+                receiver_phone: document.getElementById('receiver_phone').value.trim(),
+                receiver_address: sm === 'home' ? document.getElementById('receiver_address').value.trim() : null,
+                receiver_store_id: sm !== 'home' ? document.getElementById('receiver_store_id').value.trim() : null,
+                receiver_store_name: sm !== 'home' ? document.getElementById('receiver_store_name').value.trim() : null,
+                items: cart.map(item => ({
+                    product_id: item.product_id,
+                    product_sku_id: item.product_sku_id,
+                    quantity: item.quantity,
+                })),
+            };
+
+            try {
+                const res = await fetch(`${API_BASE}/v1/orders`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                    },
+                    body: JSON.stringify(payload),
+                });
+                const json = await res.json();
+
+                if (json.success) {
+                    lastOrderNo = json.order_no;
+                    document.getElementById('query_order_no').value = lastOrderNo;
+
+                    let resultHtml = `
+                        <div class="alert alert-success">
+                            <h5>✅ 下單成功！</h5>
+                            <p class="mb-1"><strong>訂單編號:</strong> ${json.order_no}</p>
+                            <p class="mb-1"><strong>總金額:</strong> $${json.total_amount}</p>
+                        </div>
+                    `;
+
+                    if (json.payment) {
+                        resultHtml += `
+                            <div class="alert alert-info">
+                                <h6>💳 付款資訊</h6>
+                                <p class="mb-1"><strong>交易編號:</strong> ${json.payment.merchant_trade_no}</p>
+                                <p class="mb-1"><strong>Token:</strong> <code>${json.payment.token || 'N/A'}</code></p>
+                                <p class="mb-0"><strong>Token 有效期限:</strong> ${json.payment.token_expire_date || 'N/A'}</p>
+                            </div>
+                        `;
+                    }
+
+                    resultHtml += `<pre class="bg-light p-3 rounded" style="font-size:12px; max-height:300px; overflow:auto;">${JSON.stringify(json, null, 2)}</pre>`;
+
+                    showResult(resultHtml);
+                } else {
+                    let errorHtml = `<div class="alert alert-danger"><h5>❌ 下單失敗</h5><p>${json.message || '未知錯誤'}</p></div>`;
+                    if (json.errors) {
+                        errorHtml += '<ul class="text-danger">';
+                        Object.entries(json.errors).forEach(([key, msgs]) => {
+                            msgs.forEach(msg => { errorHtml += `<li>${key}: ${msg}</li>`; });
+                        });
+                        errorHtml += '</ul>';
+                    }
+                    errorHtml += `<pre class="bg-light p-3 rounded" style="font-size:12px;">${JSON.stringify(json, null, 2)}</pre>`;
+                    showResult(errorHtml);
+                }
+            } catch (e) {
+                showResult(`<div class="alert alert-danger"><h5>❌ 請求失敗</h5><p>${e.message}</p></div>`);
+            }
+
+            btn.disabled = false;
+            hideLoading();
+        }
+
+        function showResult(html) {
+            document.getElementById('step1-section').style.display = 'none';
+            document.getElementById('step2-section').style.display = 'none';
+            document.getElementById('step3-section').style.display = 'none';
+            document.getElementById('result-section').style.display = '';
+            document.getElementById('result-content').innerHTML = html;
+        }
+
+        function resetAll() {
+            cart = [];
+            renderCart();
+            document.getElementById('result-section').style.display = 'none';
+            document.getElementById('query-section').style.display = 'none';
+            showStep(1);
+        }
+
+        // ==================== 訂單查詢 ====================
+        function queryOrder() {
+            document.getElementById('query-section').style.display = '';
+        }
+
+        async function doQueryOrder() {
+            const orderNo = document.getElementById('query_order_no').value.trim();
+            const phone = document.getElementById('query_phone').value.trim();
+            if (!orderNo || !phone) { alert('請填寫訂單編號和手機'); return; }
+
+            showLoading();
+            try {
+                const res = await fetch(`${API_BASE}/v1/orders/query?order_no=${encodeURIComponent(orderNo)}&phone=${encodeURIComponent(phone)}`);
+                const json = await res.json();
+
+                if (json.success) {
+                    const d = json.data;
+                    document.getElementById('query-result').innerHTML = `
+                        <div class="alert alert-success">查詢成功</div>
+                        <table class="table table-bordered table-sm">
+                            <tr><th>訂單編號</th><td>${d.order_no}</td></tr>
+                            <tr><th>狀態</th><td><span class="badge bg-${d.status_color}">${d.status_label}</span></td></tr>
+                            <tr><th>買家</th><td>${d.buyer_name} / ${d.buyer_phone}</td></tr>
+                            <tr><th>金額</th><td>$${d.total_amount}</td></tr>
+                            <tr><th>付款方式</th><td>${d.payment_method_label}</td></tr>
+                            <tr><th>物流方式</th><td>${d.shipping_method_label}</td></tr>
+                            <tr><th>建立時間</th><td>${d.created_at}</td></tr>
+                            <tr><th>商品</th><td>${d.items.map(i => `${i.product_name} × ${i.quantity} = $${i.subtotal}`).join('<br>')}</td></tr>
+                        </table>
+                    `;
+                } else {
+                    document.getElementById('query-result').innerHTML = `<div class="alert alert-warning">${json.message}</div>`;
+                }
+            } catch (e) {
+                document.getElementById('query-result').innerHTML = `<div class="alert alert-danger">查詢失敗: ${e.message}</div>`;
+            }
+            hideLoading();
+        }
+
+        // ==================== Helpers ====================
+        function showLoading() { document.getElementById('loading').classList.add('show'); }
+        function hideLoading() { document.getElementById('loading').classList.remove('show'); }
+    </script>
+</body>
+</html>

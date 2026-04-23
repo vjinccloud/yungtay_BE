@@ -1,0 +1,54 @@
+.loader-container {
+    background-color: rgba(255, 255, 255, 0.6);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000000;
+}
+
+.loader-zero {
+    position: absolute;
+    top: 50%;
+    left: 40%;
+    margin-left: 10%;
+    transform: translate3d(-50%, -50%, 0);
+}
+
+.loader-zero .dot {
+    width: 24px;
+    height: 24px;
+    background-image: linear-gradient(160deg, #4bc6c0 0%, #2d9ee2 100%);
+    border-radius: 100%;
+    display: inline-block;
+    animation: slide 1s infinite;
+}
+
+
+@for $n from 1 through 5 {
+    .loader-zero .dot:nth-child(#{$n}) {
+        animation-delay: (.1s * $n);
+        /* background: lighten(#87CEEB, (10 * $n)); */
+        background: mix(#2d9ee2, #87CEEB, 10% * $n);
+    }
+}
+
+
+@keyframes slide {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: .3;
+        transform: scale(2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
