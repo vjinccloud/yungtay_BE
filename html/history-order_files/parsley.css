@@ -1,0 +1,157 @@
+.parsley-error {
+    color: #B94A48 !important;
+    background-color: #F2DEDE !important;
+    border: 1px solid #EED3D7 !important;
+}
+
+.captcha {
+    position: absolute;
+    right: 3px;
+    top: 3px;
+    width: 160px;
+    cursor: pointer;
+}
+.captcha-filed {
+    position: relative;
+}
+
+table.my-striped-table  > tbody > tr.odd {
+    --bs-table-color-type: var(--bs-table-striped-color);
+    --bs-table-bg-type: var(--bs-table-striped-bg);
+}
+
+table.my-striped-table  > tbody > tr:nth-of-type(odd) {
+    --bs-table-accent-bg: var(--bs-table-bg-type);
+    color: var(--bs-table-color-type);
+}
+
+.my-display-inline {
+    display: inline !important;
+}
+
+.sorting_1{
+    width: 50px;
+}
+
+td[colspan] {
+    text-align: center; /* 將文本居中 */
+    --bs-table-color-type: var(--bs-table-striped-color);
+    --bs-table-bg-type: var(--bs-table-striped-bg);
+}
+
+
+.swal2-title {
+    /* padding: 5px; */
+    color: #595959;
+    font-size: 35px;
+}
+
+.swal2-html-container {
+    color: #545454;
+    font-size: 1.125em;
+    font-weight: 300;
+    line-height: normal;
+    word-wrap: break-word;
+}
+.swal2-actions button{
+    margin: 0 .3125em;
+    padding: .625em 2em;
+    font-weight: 500;
+    box-shadow: none;
+}
+
+.swal2-actions .btn-secondary{
+    background: #999;
+    border: #999;
+}
+
+.btn-group-inline {
+    display: inline !important;
+}
+
+.img-avatar2{
+    display: inline-block !important;
+    border-radius: 50%;
+}
+
+.slim-img-profile{
+
+    height: 128px;
+    width: 128px;
+}
+.slim-img-profile .slim{
+    border-radius: 50%;
+}
+
+.right-bar {
+    background: #ffffff !important;
+}
+.right-bar .nicescroll {
+    height: 88%;
+  }
+  .nicescroll {
+    overflow-y: auto;
+    outline: none;
+    scrollbar-width: thin;
+  }
+/* ============= 20240220 修改=================*/
+body{
+    font-family: Arial, Helvetica, sans-serif !important;
+}
+/*-- RightBar --*/
+.navbar-custom {
+    background-color: #2b3d51;
+    border-radius: 0px;
+    margin-bottom: 0px;
+    padding: 0px 10px;
+    margin-left: 250px;
+    min-height: 70px;
+    -webkit-box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.1);
+}
+
+.side-bar.right-bar {
+    float: right !important;
+    right: 24px !important;
+    width: 86%;
+}
+.right-bar-enabled .side-bar.right-bar {
+    right: 0;
+}
+.nicescroll{
+    overflow-y: auto;
+    outline: none;
+    scrollbar-width: thin;
+}
+.btn-block{
+    width: 100%;
+    display: block;
+}
+.nicescroll-rails div{
+    background-color:#ddd !important;
+}
+
+.btn-container {
+    display: flex; /* 启用 Flexbox 布局 */
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
+    gap: 5px; /* 或者其他你想要的值 */
+}
+
+.btn-container a {
+    display: block; /* 让 <a> 标签表现得像块级元素 */
+    width: 30px; /* 设置宽度 */
+    text-align: center; /* 图标居中 */
+}
+
+.btn-container a:not(:last-child) {
+    margin-right: 10px;
+}
+
+
+table.dataTable td.text-center .form-check {
+    display: flex;
+    justify-content: center; /* 水平置中 */
+    align-items: center; /* 垂直置中 */
+}
