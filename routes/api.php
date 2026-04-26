@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\SearchController;
 use App\Http\Controllers\Api\ApiUserController;
 use App\Http\Controllers\Api\ApiFactoryController;
 use App\Http\Controllers\Api\ApiFrontendController;
+use App\Http\Controllers\Api\AdminAuthController;
 /*
 |--------------------------------------------------------------------------
 | 前台 API 路由（給 Vue 使用）
@@ -140,6 +141,13 @@ Route::prefix('v1')->name('api.')->group(function () {
     // 會員相關
     Route::prefix('members')->name('members.')->group(function () {
         Route::get('/search', [ApiUserController::class, 'search'])->name('search');
+    });
+
+    // 後台帳密檢查（無狀態，不建立登入）
+    Route::prefix('admin-auth')->name('admin-auth.')->group(function () {
+        Route::post('/check-credentials', [AdminAuthController::class, 'checkCredentials'])
+            ->middleware('throttle:10,1')
+            ->name('check-credentials');
     });
     
     // 需要登入的 API - TODO: 需要建立 MemberController
