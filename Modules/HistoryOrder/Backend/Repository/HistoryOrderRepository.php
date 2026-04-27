@@ -24,10 +24,10 @@ class HistoryOrderRepository extends BaseRepository
             $query->whereDate('updated_at', $request->input('date'));
         }
 
-        // 客戶姓名搜尋
-        if ($request->filled('customer_name')) {
-            $keyword = $request->input('customer_name');
-            $query->where('customer_name', 'like', "%{$keyword}%");
+        // 訂單名稱搜尋
+        if ($request->filled('order_name')) {
+            $keyword = $request->input('order_name');
+            $query->where('order_name', 'like', "%{$keyword}%");
         }
 
         // 系列型號篩選
@@ -56,9 +56,9 @@ class HistoryOrderRepository extends BaseRepository
             $query->whereDate('updated_at', $request->input('date'));
         }
 
-        if ($request->filled('customer_name')) {
-            $keyword = $request->input('customer_name');
-            $query->where('customer_name', 'like', "%{$keyword}%");
+        if ($request->filled('order_name')) {
+            $keyword = $request->input('order_name');
+            $query->where('order_name', 'like', "%{$keyword}%");
         }
 
         if ($request->filled('series_model')) {

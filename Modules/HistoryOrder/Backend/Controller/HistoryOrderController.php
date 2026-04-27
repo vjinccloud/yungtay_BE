@@ -8,7 +8,6 @@ use Modules\HistoryOrder\Backend\Model\HistoryOrder;
 use Modules\HistoryOrder\Backend\Export\HistoryOrdersExport;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Maatwebsite\Excel\Facades\Excel;
 
 class HistoryOrderController extends Controller
@@ -32,7 +31,7 @@ class HistoryOrderController extends Controller
             'entranceSpecFields' => HistoryOrder::getEntranceSpecFields(),
             'filters'            => [
                 'date'           => $request->input('date', ''),
-                'customer_name'  => $request->input('customer_name', ''),
+                'order_name'     => $request->input('order_name', ''),
                 'series_model'   => $request->input('series_model', ''),
                 'sales_name'     => $request->input('sales_name', ''),
             ],
@@ -92,17 +91,54 @@ class HistoryOrderController extends Controller
             }
         }
 
-        $pdf = Pdf::loadView('pdf.history-order', [
-            'order'                => $order,
-            'cabinSpecFields'      => HistoryOrder::getCabinSpecFields(),
-            'entranceSpecFields'   => HistoryOrder::getEntranceSpecFields(),
-            'elevatorImageBase64'  => $elevatorImageBase64,
+        // 將 icon PNG 轉為 base64
+        // 注意：cabin 和 entrance 有同名欄位(door_panel/floor/control_panel)，不能用 array_merge
+        $iconBase64Map = [];
+        $allIconPaths = array_unique(array_merge(
+            array_column(array_values(HistoryOrder::getCabinSpecFields()), 'icon'),
+            array_column(array_values(HistoryOrder::getEntranceSpecFields()), 'icon')
+        ));
+        foreach (array_filter($allIconPaths) as $iconPath) {
+            $fullPath = public_path(ltrim($iconPath, '/'));
+            if (file_exists($fullPath)) {
+                $mime = mime_content_type($fullPath);
+                $iconBase64Map[$iconPath] = "data:{$mime};base64," . base64_encode(file_get_contents($fullPath));
+            }
+        }
+
+        $html = view('pdf.history-order', [
+            'order'               => $order,
+            'cabinSpecFields'     => HistoryOrder::getCabinSpecFields(),
+            'entranceSpecFields'  => HistoryOrder::getEntranceSpecFields(),
+            'elevatorImageBase64' => $elevatorImageBase64,
+            'iconBase64Map'       => $iconBase64Map,
+        ])->render();
+
+        // 移除 BOM 及無效 UTF-8 字元
+        $html = preg_replace('/\xEF\xBB\xBF/', '', $html);
+        $html = mb_convert_encoding($html, 'UTF-8', 'UTF-8');
+
+        $mpdf = new \Mpdf\Mpdf([
+            'format'        => 'A4-L',
+            'margin_left'   => 8,
+            'margin_right'  => 8,
+            'margin_top'    => 8,
+            'margin_bottom' => 8,
+            'mode'          => 'utf-8',
+            'fontDir'       => [storage_path('fonts')],
+            'fontdata'      => [
+                'notosanstc' => ['R' => 'NotoSansTC.ttf'],
+            ],
+            'default_font'  => 'notosanstc',
         ]);
 
-        $pdf->setPaper('a4', 'landscape');
+        $mpdf->WriteHTML($html);
 
         $filename = "訂單_{$order->order_name}.pdf";
 
-        return $pdf->download($filename);
+        return response($mpdf->Output('', 'S'), 200, [
+            'Content-Type'        => 'application/pdf',
+            'Content-Disposition' => 'attachment; filename="' . rawurlencode($filename) . '"',
+        ]);
     }
 }

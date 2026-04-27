@@ -22,11 +22,11 @@
                         />
                     </div>
                     <div class="col-md-2">
-                        <label class="form-label small mb-1">客戶姓名 <span class="text-danger">*</span></label>
+                        <label class="form-label small mb-1">訂單名稱 <span class="text-danger">*</span></label>
                         <input
                             type="text"
                             class="form-control form-control-sm"
-                            v-model="filterForm.customer_name"
+                            v-model="filterForm.order_name"
                             placeholder="請輸入"
                             @keydown.enter="applyFilter"
                         />
@@ -187,13 +187,13 @@
     <!-- 檢視彈窗 (Teleport 到 body 避免 z-index 問題) -->
     <Teleport to="body">
         <div class="modal fade" id="detailModal" tabindex="-1" ref="detailModalRef">
-            <div class="modal-dialog modal-xl modal-dialog-scrollable" style="max-width:1100px;">
+            <div class="modal-dialog modal-xl modal-dialog-scrollable" style="max-width:1200px; display:flex; align-items:center;">
                 <div class="modal-content border-0 overflow-hidden" style="border-radius:8px;" v-if="detailOrder">
                     <div class="row g-0" style="min-height:600px;">
                         <!-- ====== 左側深色面板：規格 ====== -->
-                        <div class="col-5" style="background:#2d3238;color:#e0e0e0;">
+                        <div class="col-6" style="background:#FFF; border-radius:0.5rem; overflow:hidden;">
                             <!-- 左側 Header -->
-                            <div class="px-3 py-2" style="background:#23272b;border-bottom:1px solid #3a3f44;">
+                            <div class="px-3 py-2" style="background:#464C53;border-bottom:1px solid #EDEDED;">
                                 <h6 class="mb-0 fw-bold" style="font-size:0.9rem;color:#ccc;">
                                     規格 ({{ detailOrder.series_model }} 系列)
                                 </h6>
@@ -203,40 +203,48 @@
                                 <table style="width:100%;border-collapse:collapse;">
                                     <!-- 表頭 -->
                                     <thead>
-                                        <tr style="border-bottom:2px solid #3a3f44;">
-                                            <th colspan="2" style="padding:8px 12px;font-size:0.8rem;color:#aaa;font-weight:600;width:50%;border-right:1px solid #3a3f44;">車廂</th>
-                                            <th colspan="2" style="padding:8px 12px;font-size:0.8rem;color:#aaa;font-weight:600;">出入口</th>
+                                        <tr style="border-bottom:1px solid #EDEDED;">
+                                            <th colspan="2" style="padding:8px 12px;font-size:0.8rem;color:#1E2939;font-weight:600;width:50%;border-right:1px solid #EDEDED;background:#F5F5F5;">車廂</th>
+                                            <th colspan="2" style="padding:8px 12px;font-size:0.8rem;color:#1E2939;font-weight:600;background:#F5F5F5;">出入口</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-for="(row, rowIdx) in specRows" :key="rowIdx" style="border-bottom:1px solid #3a3f44;">
+                                        <tr v-for="(row, rowIdx) in specRows" :key="rowIdx" style="border-bottom:1px solid #EDEDED;">
                                             <!-- 車廂欄 -->
                                             <template v-if="row.cabin">
-                                                <td style="width:50px;padding:8px 4px 8px 12px;vertical-align:top;text-align:center;">
-                                                    <i :class="['fa', row.cabin.icon]" style="color:#d9534f;font-size:1.2rem;display:block;margin-bottom:4px;"></i>
-                                                    <span style="font-size:0.7rem;color:#999;">{{ row.cabin.label }}</span>
+                                                <td style="width:70px;padding:8px 4px 8px 8px;border-right:1px solid #EDEDED;vertical-align:middle;text-align:center;">
+                                                    <i><img :src="row.cabin.icon" style="width:34px;"></i><br />
+                                                    <span style="font-size:0.7rem;color:#4A5565;">{{ row.cabin.label }}</span>
                                                 </td>
-                                                <td style="padding:8px 8px 8px 4px;vertical-align:top;font-size:0.8rem;color:#e0e0e0;line-height:1.5;border-right:1px solid #3a3f44;">
+                                                <td style="padding:8px 8px 8px 4px;vertical-align:middle;font-size:0.8rem;color:#101828;line-height:1.5;border-right:1px solid #EDEDED;">
                                                     <template v-if="row.cabin.value">
-                                                        <div v-for="(line, idx) in formatSpecLines(row.cabin.value)" :key="idx">{{ line }}</div>
+                                                        <div v-for="(line, idx) in formatSpecLines(row.cabin.value)" :key="idx"
+                                                             :style="line.subLabel ? 'display:flex;justify-content:space-between;' : ''">
+                                                            <span>{{ line.value }}</span>
+                                                            <span v-if="line.subLabel" style="color:#99A1AF;">{{ line.subLabel }}</span>
+                                                        </div>
                                                     </template>
-                                                    <span v-else style="color:#666;">—</span>
+                                                    <span v-else style="color:#99A1AF;">—</span>
                                                 </td>
                                             </template>
                                             <template v-else>
-                                                <td colspan="2" style="border-right:1px solid #3a3f44;"></td>
+                                                <td colspan="2" style="border-right:1px solid #EDEDED;"></td>
                                             </template>
                                             <!-- 出入口欄 -->
                                             <template v-if="row.entrance">
-                                                <td style="width:50px;padding:8px 4px 8px 12px;vertical-align:top;text-align:center;">
-                                                    <i :class="['fa', row.entrance.icon]" style="color:#d9534f;font-size:1.2rem;display:block;margin-bottom:4px;"></i>
-                                                    <span style="font-size:0.7rem;color:#999;">{{ row.entrance.label }}</span>
+                                                <td style="width:70px;padding:8px 4px 8px 8px;border-right:1px solid #EDEDED;vertical-align:middle;text-align:center;">
+                                                    <i><img :src="row.entrance.icon" style="width:34px;"></i><br />
+                                                    <span style="font-size:0.7rem;color:#4A5565;">{{ row.entrance.label }}</span>
                                                 </td>
-                                                <td style="padding:8px 8px 8px 4px;vertical-align:top;font-size:0.8rem;color:#e0e0e0;line-height:1.5;">
+                                                <td style="padding:8px 8px 8px 4px;vertical-align:middle;font-size:0.8rem;color:#101828;line-height:1.5;">
                                                     <template v-if="row.entrance.value">
-                                                        <div v-for="(line, idx) in formatSpecLines(row.entrance.value)" :key="idx">{{ line }}</div>
+                                                        <div v-for="(line, idx) in formatSpecLines(row.entrance.value)" :key="idx"
+                                                             :style="line.subLabel ? 'display:flex;justify-content:space-between;' : ''">
+                                                            <span>{{ line.value }}</span>
+                                                            <span v-if="line.subLabel" style="color:#99A1AF;">{{ line.subLabel }}</span>
+                                                        </div>
                                                     </template>
-                                                    <span v-else style="color:#666;">—</span>
+                                                    <span v-else style="color:#99A1AF;">—</span>
                                                 </td>
                                             </template>
                                             <template v-else>
@@ -249,20 +257,20 @@
                         </div>
 
                         <!-- ====== 右側白色面板：渲染圖 + 客戶資料 ====== -->
-                        <div class="col-7 d-flex flex-column" style="background:#fff;color:#333;">
+                        <div class="col-6 d-flex flex-column" style="color:#333; margin-left:15px; width:calc(50% - 15px);">
                             <!-- ELEVATOR STYLE + 關閉按鈕 -->
-                            <div class="d-flex justify-content-between align-items-center px-4 pt-3 pb-2">
-                                <h6 class="fw-bold mb-0" style="color:#888;letter-spacing:1px;">ELEVATOR STYLE</h6>
+                            <div class="d-flex justify-content-between align-items-center px-4 pt-3 pb-2" style="background:#FFF; border-top-left-radius:0.5rem;">
+                                <h6 class="fw-bold mb-0" style="color:#E3E3E3; letter-spacing:1px;">ELEVATOR STYLE</h6>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" style="font-size:0.7rem;"></button>
                             </div>
                             <!-- 渲染圖 -->
-                            <div class="text-center px-4 mb-3 flex-grow-1 d-flex align-items-center justify-content-center">
+                            <div class="text-center px-4 mb-3 flex-grow-1 d-flex align-items-center justify-content-center" style="background:#FFF; max-height:320px; overflow:hidden; border-bottom-left-radius:0.5rem; border-bottom-right-radius:0.5rem;">
                                 <img
                                     v-if="detailOrder.elevator_image"
                                     :src="detailOrder.elevator_image"
                                     alt="電梯渲染圖"
                                     class="img-fluid rounded shadow-sm"
-                                    style="max-height:320px;max-width:100%;object-fit:contain;"
+                                    style="max-height:320px; max-width:610px; object-fit:contain;"
                                 />
                                 <div v-else class="text-muted py-5">
                                     <i class="fa fa-image fa-3x mb-2 d-block opacity-50"></i>
@@ -271,40 +279,40 @@
                             </div>
 
                             <!-- 客戶訂車資料 -->
-                            <div class="px-4 pb-3">
-                                <div class="fw-bold mb-3 pb-1" style="font-size:0.95rem;border-bottom:2px solid #333;">客戶訂車資料</div>
+                            <div class="px-4 pb-3" style="background:#FFF; padding-top:10px; border-radius:0.5rem;">
+                                <div class="fw-bold pb-1" style="font-size:0.95rem; color:#1E2939;">客戶訂車資料</div>
                                 <div class="row g-2 mb-2">
                                     <div class="col-6">
-                                        <label class="form-label text-muted mb-0" style="font-size:0.7rem;">客戶名稱</label>
-                                        <div class="form-control form-control-sm bg-light" style="font-size:0.8rem;">{{ detailOrder.customer_name || '—' }}</div>
+                                        <label class="form-label text-muted mb-0" style="font-size:0.7rem; color:#6A7282;">客戶名稱</label>
+                                        <div class="form-control form-control-sm bg-light" style="font-size:0.8rem; background-color:transparent !important; border:1px solid #E5E7EB;">{{ detailOrder.customer_name || '—' }}</div>
                                     </div>
                                     <div class="col-6">
                                         <label class="form-label text-muted mb-0" style="font-size:0.7rem;">專案名稱</label>
-                                        <div class="form-control form-control-sm bg-light" style="font-size:0.8rem;">{{ detailOrder.project_name || '—' }}</div>
+                                        <div class="form-control form-control-sm bg-light" style="font-size:0.8rem; background-color:transparent !important; border:1px solid #E5E7EB;">{{ detailOrder.project_name || '—' }}</div>
                                     </div>
                                 </div>
                                 <div class="mb-2">
-                                    <label class="form-label text-muted mb-0" style="font-size:0.7rem;">施工地點</label>
-                                    <div class="form-control form-control-sm bg-light" style="font-size:0.8rem;">{{ detailOrder.construction_location || '—' }}</div>
+                                    <label class="form-label text-muted mb-0" style="font-size:0.7rem; color:#6A7282;">施工地點</label>
+                                    <div class="form-control form-control-sm bg-light" style="font-size:0.8rem; background-color:transparent !important; border:1px solid #E5E7EB;">{{ detailOrder.construction_location || '—' }}</div>
                                 </div>
                                 <div class="row g-2 mb-2">
                                     <div class="col-6">
-                                        <label class="form-label text-muted mb-0" style="font-size:0.7rem;">客戶窗口姓名</label>
-                                        <div class="form-control form-control-sm bg-light" style="font-size:0.8rem;">{{ detailOrder.customer_contact_name || '—' }}</div>
+                                        <label class="form-label text-muted mb-0" style="font-size:0.7rem; color:#6A7282;">客戶窗口姓名</label>
+                                        <div class="form-control form-control-sm bg-light" style="font-size:0.8rem; background-color:transparent !important; border:1px solid #E5E7EB;">{{ detailOrder.customer_contact_name || '—' }}</div>
                                     </div>
                                     <div class="col-6">
-                                        <label class="form-label text-muted mb-0" style="font-size:0.7rem;">客戶窗口信箱</label>
-                                        <div class="form-control form-control-sm bg-light" style="font-size:0.8rem;">{{ detailOrder.customer_contact_email || '—' }}</div>
+                                        <label class="form-label text-muted mb-0" style="font-size:0.7rem; color:#6A7282;">客戶窗口信箱</label>
+                                        <div class="form-control form-control-sm bg-light" style="font-size:0.8rem; background-color:transparent !important; border:1px solid #E5E7EB;">{{ detailOrder.customer_contact_email || '—' }}</div>
                                     </div>
                                 </div>
                                 <div class="row g-2 mb-2">
                                     <div class="col-6">
-                                        <label class="form-label text-muted mb-0" style="font-size:0.7rem;">業務人員姓名</label>
-                                        <div class="form-control form-control-sm bg-light" style="font-size:0.8rem;">{{ detailOrder.sales_name || '—' }}</div>
+                                        <label class="form-label text-muted mb-0" style="font-size:0.7rem; color:#6A7282;">業務人員姓名</label>
+                                        <div class="form-control form-control-sm bg-light" style="font-size:0.8rem; background-color:transparent !important; border:1px solid #E5E7EB;">{{ detailOrder.sales_name || '—' }}</div>
                                     </div>
                                     <div class="col-6">
-                                        <label class="form-label text-muted mb-0" style="font-size:0.7rem;">業務人員信箱</label>
-                                        <div class="form-control form-control-sm bg-light" style="font-size:0.8rem;">{{ detailOrder.sales_email || '—' }}</div>
+                                        <label class="form-label text-muted mb-0" style="font-size:0.7rem; color:#6A7282;">業務人員信箱</label>
+                                        <div class="form-control form-control-sm bg-light" style="font-size:0.8rem; background-color:transparent !important; border:1px solid #E5E7EB;">{{ detailOrder.sales_email || '—' }}</div>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-between align-items-end">
@@ -418,14 +426,24 @@ export default {
         });
 
         const formatSpecLines = (value) => {
-            if (Array.isArray(value)) return value;
-            if (typeof value === 'string') return value.split('\n');
-            return [String(value)];
+            const lines = Array.isArray(value)
+                ? value
+                : typeof value === 'string'
+                    // 相容字面 \n（單引號 PHP 字串存入的舊資料）與真實換行
+                    ? value.replace(/\\n/g, '\n').split('\n')
+                    : [String(value)];
+            return lines.map(line => {
+                const parts = line.split('\u3000'); // 全形空格分隔
+                if (parts.length >= 2) {
+                    return { value: parts[0].trim(), subLabel: parts.slice(1).join('\u3000').trim() };
+                }
+                return { value: line.trim(), subLabel: null };
+            });
         };
 
         const filterForm = reactive({
             date:          props.filters?.date || '',
-            customer_name: props.filters?.customer_name || '',
+            order_name:    props.filters?.order_name || '',
             series_model:  props.filters?.series_model || '',
             sales_name:    props.filters?.sales_name || '',
         });
@@ -433,7 +451,7 @@ export default {
         const buildQuery = (extra = {}) => {
             const params = {};
             if (filterForm.date)          params.date          = filterForm.date;
-            if (filterForm.customer_name) params.customer_name = filterForm.customer_name;
+            if (filterForm.order_name)    params.order_name    = filterForm.order_name;
             if (filterForm.series_model)  params.series_model  = filterForm.series_model;
             if (filterForm.sales_name)    params.sales_name    = filterForm.sales_name;
             return { ...params, ...extra };
@@ -448,7 +466,7 @@ export default {
 
         const resetFilter = () => {
             filterForm.date = '';
-            filterForm.customer_name = '';
+            filterForm.order_name = '';
             filterForm.series_model = '';
             filterForm.sales_name = '';
             router.get(route('admin.history-order.index'), {}, {

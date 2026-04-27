@@ -36,13 +36,13 @@ class HistoryOrder extends Model
     public static function getCabinSpecFields(): array
     {
         return [
-            'ceiling'       => ['label' => '天井',   'icon' => 'fa-lightbulb'],
-            'door_panel'    => ['label' => '門板',   'icon' => 'fa-door-closed'],
-            'side_panel'    => ['label' => '側板',   'icon' => 'fa-columns'],
-            'floor'         => ['label' => '地板',   'icon' => 'fa-square'],
-            'control_panel' => ['label' => '操作盤', 'icon' => 'fa-th-list'],
-            'handrail'      => ['label' => '扶手',   'icon' => 'fa-grip-lines'],
-            'trim'          => ['label' => '飾條',   'icon' => 'fa-minus'],
+            'ceiling'       => ['label' => '天井',   'icon' => '/images/icon_01.png'],
+            'door_panel'    => ['label' => '門板',   'icon' => '/images/icon_03.png'],
+            'side_panel'    => ['label' => '側板',   'icon' => '/images/icon_03.png'],
+            'floor'         => ['label' => '地板',   'icon' => '/images/icon_04.png'],
+            'control_panel' => ['label' => '操作盤', 'icon' => '/images/icon_05.png'],
+            'handrail'      => ['label' => '扶手',   'icon' => '/images/icon_06.png'],
+            'trim'          => ['label' => '飾條',   'icon' => '/images/icon_08.png'],
         ];
     }
 
@@ -52,11 +52,11 @@ class HistoryOrder extends Model
     public static function getEntranceSpecFields(): array
     {
         return [
-            'door_panel'    => ['label' => '門板',   'icon' => 'fa-door-open'],
-            'door_frame'    => ['label' => '門框',   'icon' => 'fa-border-style'],
-            'door_column'   => ['label' => '門柱',   'icon' => 'fa-grip-vertical'],
-            'floor'         => ['label' => '地板',   'icon' => 'fa-square'],
-            'control_panel' => ['label' => '操作盤', 'icon' => 'fa-th-list'],
+            'door_panel'    => ['label' => '門板',   'icon' => '/images/icon_02.png'],
+            'door_frame'    => ['label' => '門框',   'icon' => '/images/icon_09.png'],
+            'door_column'   => ['label' => '門檻',   'icon' => '/images/icon_10.png'],
+            'floor'         => ['label' => '廳燈',   'icon' => '/images/icon_11.png'],
+            'control_panel' => ['label' => '操作盤', 'icon' => '/images/icon_12.png'],
         ];
     }
 

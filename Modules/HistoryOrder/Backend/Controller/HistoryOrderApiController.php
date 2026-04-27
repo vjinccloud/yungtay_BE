@@ -93,7 +93,7 @@ class HistoryOrderApiController extends Controller
         $controlPanels = ['BL-C2', 'BL-C3', 'BL-C5'];
         $handrails     = ['NR-108', 'NR-106', 'NR-200'];
         $trims         = ['鏡面不銹鋼', '髮紋不銹鋼', '無'];
-        $doorFrames    = ['窄型門框\n鏡面不銹鋼', '標準門框\n髮紋不銹鋼'];
+        $doorFrames    = ["窄型門框\n鏡面不銹鋼", "標準門框\n髮紋不銹鋼"];
         $doorColumns   = ['硬質鋁合金', '不銹鋼'];
 
         $customers = [
@@ -151,7 +151,7 @@ class HistoryOrderApiController extends Controller
                     'door_panel'    => $doorPanels[array_rand($doorPanels)],
                     'side_panel'    => implode("\n", $sideValue),
                     'floor'         => $floors[array_rand($floors)],
-                    'control_panel' => $controlPanels[array_rand($controlPanels)] . "\n無　　車廂操作盤\n　　　無障礙操作盤",
+                    'control_panel' => $controlPanels[array_rand($controlPanels)] . "　車廂操作盤\n無　無障礙操作盤",
                     'handrail'      => $handrails[array_rand($handrails)],
                     'trim'          => $trims[array_rand($trims)],
                 ],
@@ -160,7 +160,7 @@ class HistoryOrderApiController extends Controller
                     'door_frame'    => $doorFrames[array_rand($doorFrames)],
                     'door_column'   => $doorColumns[array_rand($doorColumns)],
                     'floor'         => '無',
-                    'control_panel' => "BL-C2　　　乘場操作盤\nHF-LM5(LED)　乘場指示器",
+                    'control_panel' => "BL-C2　乘場操作盤\nHF-LM5(LED)　乘場指示器",
                 ],
             ];
         }
@@ -173,12 +173,14 @@ class HistoryOrderApiController extends Controller
     }
 
     /**
-     * 用假資料批次寫入資料庫
+     * 用假資料批次寫入資料庫（先清空再寫入）
      *
      * POST /api/v1/history-orders/seed-fake
      */
     public function seedFake(): JsonResponse
     {
+        HistoryOrder::truncate();
+
         $fakeResponse = $this->fake();
         $fakeData = json_decode($fakeResponse->getContent(), true)['data'];
 
@@ -190,7 +192,7 @@ class HistoryOrderApiController extends Controller
         return response()->json([
             'success' => true,
             'count'   => count($created),
-            'message' => '已寫入 ' . count($created) . ' 筆假資料到資料庫',
+            'message' => '已清空並重新寫入 ' . count($created) . ' 筆假資料',
         ], 201);
     }
 }
