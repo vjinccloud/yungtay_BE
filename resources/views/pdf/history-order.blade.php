@@ -176,10 +176,10 @@ td, th, div, span, p { font-family: notosanstc, sans-serif; }
             </table>
             @endif
 
-            {{-- 客戶訂車資料 標題 --}}
+            {{-- 客戶訂單資料 標題 --}}
             <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
             <tr>
-                <td style="font-size:13px; font-weight:bold; color:#1E2939; padding-bottom:6px;">客戶訂車資料</td>
+                <td style="font-size:13px; font-weight:bold; color:#1E2939; padding-bottom:6px;">客戶訂單資料</td>
             </tr>
             </table>
 

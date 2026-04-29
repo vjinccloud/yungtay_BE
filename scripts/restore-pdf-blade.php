@@ -156,8 +156,8 @@ td, th, div, span, p { font-family: notosanstc, sans-serif; }
     </div>
     @endif
 
-    {{-- 客戶訂車資料 --}}
-    <div style="font-size:14px; font-weight:bold; color:#1E2939; padding-bottom:8px;">客戶訂車資料</div>
+    {{-- 客戶訂單資料 --}}
+    <div style="font-size:14px; font-weight:bold; color:#1E2939; padding-bottom:8px;">客戶訂單資料</div>
 
     <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse; margin-bottom:6px;">
     <tr>
