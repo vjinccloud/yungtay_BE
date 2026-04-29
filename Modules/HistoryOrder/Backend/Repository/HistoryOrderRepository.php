@@ -52,6 +52,12 @@ class HistoryOrderRepository extends BaseRepository
     {
         $query = $this->model->query();
 
+        // 若有指定 IDs，直接依 ID 篩選，忽略其他條件
+        $ids = array_filter((array) $request->input('ids', []), 'is_numeric');
+        if (!empty($ids)) {
+            return $query->whereIn('id', $ids)->orderByDesc('updated_at')->get();
+        }
+
         if ($request->filled('date')) {
             $query->whereDate('updated_at', $request->input('date'));
         }

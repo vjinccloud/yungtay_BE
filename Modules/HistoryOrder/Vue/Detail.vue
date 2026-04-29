@@ -93,10 +93,10 @@
                             </div>
                         </div>
 
-                        <!-- 客戶訂車資料 -->
+                        <!-- 客戶訂單資料 -->
                         <div class="customer-info">
                             <h6 class="fw-bold text-white bg-primary px-3 py-2 rounded-top mb-0">
-                                客戶訂車資料
+                                客戶訂單資料
                             </h6>
                             <table class="table table-bordered table-sm mb-0">
                                 <tbody>

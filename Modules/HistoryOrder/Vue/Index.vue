@@ -533,8 +533,14 @@ export default {
         };
 
         const exportUrl = computed(() => {
+            const base = route('admin.history-order.export');
+            if (selectedIds.value.length > 0) {
+                const params = new URLSearchParams();
+                selectedIds.value.forEach(id => params.append('ids[]', id));
+                return base + '?' + params.toString();
+            }
             const params = new URLSearchParams(buildQuery());
-            return route('admin.history-order.export') + '?' + params.toString();
+            return base + '?' + params.toString();
         });
 
         return {
