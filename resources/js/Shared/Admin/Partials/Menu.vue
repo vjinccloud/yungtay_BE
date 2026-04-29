@@ -31,6 +31,7 @@
                                     <Link
                                     :class="['nav-main-link', isActive(submenu.url) ? 'active' : '']"
                                     :href="isRouteDefined(submenu.url_name)?route(submenu.url_name):'#'">
+                                        <i v-if="submenu.icon_image" :class="['nav-main-link-icon', submenu.icon_image]"></i>
                                         <span class="nav-main-link-name">{{ submenu.title }}</span>
                                     </Link>
 
@@ -46,6 +47,7 @@
                                     aria-haspopup="true"
                                     aria-expanded="true"
                                     href="#">
+                                        <i v-if="submenu.icon_image" :class="['nav-main-link-icon', submenu.icon_image]"></i>
                                         <span class="nav-main-link-name">{{ submenu.title }}</span>
                                     </a>
                                     <ul class="nav-main-submenu">

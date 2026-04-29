@@ -278,9 +278,9 @@
                                 </div>
                             </div>
 
-                            <!-- 客戶訂車資料 -->
+                            <!-- 客戶訂單資料 -->
                             <div class="px-4 pb-3" style="background:#FFF; padding-top:10px; border-radius:0.5rem;">
-                                <div class="fw-bold pb-1" style="font-size:0.95rem; color:#1E2939;">客戶訂車資料</div>
+                                <div class="fw-bold pb-1" style="font-size:0.95rem; color:#1E2939;">客戶訂單資料</div>
                                 <div class="row g-2 mb-2">
                                     <div class="col-6">
                                         <label class="form-label text-muted mb-0" style="font-size:0.7rem; color:#6A7282;">客戶名稱</label>
