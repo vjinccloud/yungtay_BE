@@ -36,10 +36,10 @@ class HistoryOrderRepository extends BaseRepository
             $query->where('series_model', 'like', "%{$keyword}%");
         }
 
-        // 業務姓名搜尋
-        if ($request->filled('sales_name')) {
-            $keyword = $request->input('sales_name');
-            $query->where('sales_name', 'like', "%{$keyword}%");
+        // 客戶名稱搜尋
+        if ($request->filled('customer_name')) {
+            $keyword = $request->input('customer_name');
+            $query->where('customer_name', 'like', "%{$keyword}%");
         }
 
         return $query->orderByDesc('updated_at')->paginate($perPage);

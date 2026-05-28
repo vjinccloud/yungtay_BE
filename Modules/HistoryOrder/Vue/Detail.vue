@@ -103,28 +103,20 @@
                                     <tr>
                                         <th class="bg-body-light" style="width: 25%;">客戶名稱</th>
                                         <td style="width: 25%;">{{ order.customer_name || '—' }}</td>
-                                        <th class="bg-body-light" style="width: 25%;">專案名稱</th>
-                                        <td style="width: 25%;">{{ order.project_name || '—' }}</td>
+                                        <th class="bg-body-light" style="width: 25%;">聯絡電話</th>
+                                        <td style="width: 25%;">{{ order.contact_phone || '—' }}</td>
                                     </tr>
                                     <tr>
-                                        <th class="bg-body-light" colspan="1">施工地點</th>
-                                        <td colspan="3">{{ order.construction_location || '—' }}</td>
+                                        <th class="bg-body-light">聯絡信箱</th>
+                                        <td>{{ order.contact_email || '—' }}</td>
+                                        <th class="bg-body-light">案件地區</th>
+                                        <td>{{ order.case_area || '—' }}</td>
                                     </tr>
                                     <tr>
-                                        <th class="bg-body-light">客戶窗口姓名</th>
-                                        <td>{{ order.customer_contact_name || '—' }}</td>
-                                        <th class="bg-body-light">客戶窗口信箱</th>
-                                        <td>{{ order.customer_contact_email || '—' }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="bg-body-light">業務人員姓名</th>
-                                        <td>{{ order.sales_name || '—' }}</td>
-                                        <th class="bg-body-light">業務人員信箱</th>
-                                        <td>{{ order.sales_email || '—' }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="bg-body-light" colspan="1">業務連絡電話</th>
-                                        <td colspan="3">{{ order.sales_phone || '—' }}</td>
+                                        <th class="bg-body-light">電梯台數</th>
+                                        <td>{{ order.elevator_count ?? '—' }}</td>
+                                        <th class="bg-body-light">電梯規格</th>
+                                        <td>{{ order.elevator_spec || '—' }}</td>
                                     </tr>
                                 </tbody>
                             </table>

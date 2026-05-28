@@ -42,11 +42,11 @@
                         />
                     </div>
                     <div class="col-md-2">
-                        <label class="form-label small mb-1">業務姓名 <span class="text-danger">*</span></label>
+                        <label class="form-label small mb-1">客戶名稱</label>
                         <input
                             type="text"
                             class="form-control form-control-sm"
-                            v-model="filterForm.sales_name"
+                            v-model="filterForm.customer_name"
                             placeholder="請輸入"
                             @keydown.enter="applyFilter"
                         />
@@ -93,9 +93,9 @@
                                         型號
                                         <i class="fa fa-sort ms-1 text-muted" style="cursor: pointer;" @click="toggleSort('series_model')"></i>
                                     </th>
-                                    <th style="width: 120px;" class="text-center">
-                                        業務姓名
-                                        <i class="fa fa-sort ms-1 text-muted" style="cursor: pointer;" @click="toggleSort('sales_name')"></i>
+                                    <th style="width: 140px;" class="text-center">
+                                        客戶名稱
+                                        <i class="fa fa-sort ms-1 text-muted" style="cursor: pointer;" @click="toggleSort('customer_name')"></i>
                                     </th>
                                     <th style="width: 80px;" class="text-center">功能</th>
                                 </tr>
@@ -123,7 +123,7 @@
                                         <span v-else class="text-muted">-</span>
                                     </td>
                                     <td class="text-center">
-                                        {{ item.sales_name }}
+                                        {{ item.customer_name }}
                                     </td>
                                     <td class="text-center">
                                         <button
@@ -287,39 +287,31 @@
                                         <div class="form-control form-control-sm bg-light" style="font-size:0.8rem; background-color:transparent !important; border:1px solid #E5E7EB;">{{ detailOrder.customer_name || '—' }}</div>
                                     </div>
                                     <div class="col-6">
-                                        <label class="form-label text-muted mb-0" style="font-size:0.7rem;">專案名稱</label>
-                                        <div class="form-control form-control-sm bg-light" style="font-size:0.8rem; background-color:transparent !important; border:1px solid #E5E7EB;">{{ detailOrder.project_name || '—' }}</div>
-                                    </div>
-                                </div>
-                                <div class="mb-2">
-                                    <label class="form-label text-muted mb-0" style="font-size:0.7rem; color:#6A7282;">施工地點</label>
-                                    <div class="form-control form-control-sm bg-light" style="font-size:0.8rem; background-color:transparent !important; border:1px solid #E5E7EB;">{{ detailOrder.construction_location || '—' }}</div>
-                                </div>
-                                <div class="row g-2 mb-2">
-                                    <div class="col-6">
-                                        <label class="form-label text-muted mb-0" style="font-size:0.7rem; color:#6A7282;">客戶窗口姓名</label>
-                                        <div class="form-control form-control-sm bg-light" style="font-size:0.8rem; background-color:transparent !important; border:1px solid #E5E7EB;">{{ detailOrder.customer_contact_name || '—' }}</div>
-                                    </div>
-                                    <div class="col-6">
-                                        <label class="form-label text-muted mb-0" style="font-size:0.7rem; color:#6A7282;">客戶窗口信箱</label>
-                                        <div class="form-control form-control-sm bg-light" style="font-size:0.8rem; background-color:transparent !important; border:1px solid #E5E7EB;">{{ detailOrder.customer_contact_email || '—' }}</div>
+                                        <label class="form-label text-muted mb-0" style="font-size:0.7rem; color:#6A7282;">聯絡電話</label>
+                                        <div class="form-control form-control-sm bg-light" style="font-size:0.8rem; background-color:transparent !important; border:1px solid #E5E7EB;">{{ detailOrder.contact_phone || '—' }}</div>
                                     </div>
                                 </div>
                                 <div class="row g-2 mb-2">
                                     <div class="col-6">
-                                        <label class="form-label text-muted mb-0" style="font-size:0.7rem; color:#6A7282;">業務人員姓名</label>
-                                        <div class="form-control form-control-sm bg-light" style="font-size:0.8rem; background-color:transparent !important; border:1px solid #E5E7EB;">{{ detailOrder.sales_name || '—' }}</div>
+                                        <label class="form-label text-muted mb-0" style="font-size:0.7rem; color:#6A7282;">聯絡信箱</label>
+                                        <div class="form-control form-control-sm bg-light" style="font-size:0.8rem; background-color:transparent !important; border:1px solid #E5E7EB;">{{ detailOrder.contact_email || '—' }}</div>
                                     </div>
                                     <div class="col-6">
-                                        <label class="form-label text-muted mb-0" style="font-size:0.7rem; color:#6A7282;">業務人員信箱</label>
-                                        <div class="form-control form-control-sm bg-light" style="font-size:0.8rem; background-color:transparent !important; border:1px solid #E5E7EB;">{{ detailOrder.sales_email || '—' }}</div>
+                                        <label class="form-label text-muted mb-0" style="font-size:0.7rem; color:#6A7282;">案件地區</label>
+                                        <div class="form-control form-control-sm bg-light" style="font-size:0.8rem; background-color:transparent !important; border:1px solid #E5E7EB;">{{ detailOrder.case_area || '—' }}</div>
                                     </div>
                                 </div>
-                                <div class="d-flex justify-content-between align-items-end">
-                                    <div>
-                                        <span class="text-muted" style="font-size:0.75rem;">業務連絡電話：</span>
-                                        <span style="font-size:0.85rem;">{{ detailOrder.sales_phone || '—' }}</span>
+                                <div class="row g-2 mb-2">
+                                    <div class="col-4">
+                                        <label class="form-label text-muted mb-0" style="font-size:0.7rem; color:#6A7282;">電梯台數</label>
+                                        <div class="form-control form-control-sm bg-light" style="font-size:0.8rem; background-color:transparent !important; border:1px solid #E5E7EB;">{{ detailOrder.elevator_count ?? '—' }}</div>
                                     </div>
+                                    <div class="col-8">
+                                        <label class="form-label text-muted mb-0" style="font-size:0.7rem; color:#6A7282;">電梯規格</label>
+                                        <div class="form-control form-control-sm bg-light" style="font-size:0.8rem; background-color:transparent !important; border:1px solid #E5E7EB;">{{ detailOrder.elevator_spec || '—' }}</div>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-end align-items-end">
                                     <a
                                         :href="route('admin.history-order.export-pdf', detailOrder.id)"
                                         class="btn btn-sm btn-danger"
@@ -445,15 +437,15 @@ export default {
             date:          props.filters?.date || '',
             order_name:    props.filters?.order_name || '',
             series_model:  props.filters?.series_model || '',
-            sales_name:    props.filters?.sales_name || '',
+            customer_name: props.filters?.customer_name || '',
         });
 
         const buildQuery = (extra = {}) => {
             const params = {};
-            if (filterForm.date)          params.date          = filterForm.date;
-            if (filterForm.order_name)    params.order_name    = filterForm.order_name;
-            if (filterForm.series_model)  params.series_model  = filterForm.series_model;
-            if (filterForm.sales_name)    params.sales_name    = filterForm.sales_name;
+            if (filterForm.date)           params.date           = filterForm.date;
+            if (filterForm.order_name)     params.order_name     = filterForm.order_name;
+            if (filterForm.series_model)   params.series_model   = filterForm.series_model;
+            if (filterForm.customer_name)  params.customer_name  = filterForm.customer_name;
             return { ...params, ...extra };
         };
 
@@ -468,7 +460,7 @@ export default {
             filterForm.date = '';
             filterForm.order_name = '';
             filterForm.series_model = '';
-            filterForm.sales_name = '';
+            filterForm.customer_name = '';
             router.get(route('admin.history-order.index'), {}, {
                 preserveState: true,
                 preserveScroll: true,

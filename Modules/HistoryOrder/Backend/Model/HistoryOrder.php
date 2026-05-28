@@ -11,17 +11,15 @@ class HistoryOrder extends Model
     protected $fillable = [
         'order_name',
         'customer_name',
-        'project_name',
-        'construction_location',
-        'customer_contact_name',
-        'customer_contact_email',
+        'contact_phone',
+        'contact_email',
+        'case_area',
+        'elevator_count',
+        'elevator_spec',
         'series_model',
         'cabin_specs',
         'entrance_specs',
         'elevator_image',
-        'sales_name',
-        'sales_email',
-        'sales_phone',
         'note',
     ];
 

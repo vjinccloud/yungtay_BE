@@ -33,7 +33,7 @@ class HistoryOrderController extends Controller
                 'date'           => $request->input('date', ''),
                 'order_name'     => $request->input('order_name', ''),
                 'series_model'   => $request->input('series_model', ''),
-                'sales_name'     => $request->input('sales_name', ''),
+                'customer_name'  => $request->input('customer_name', ''),
             ],
         ]);
     }

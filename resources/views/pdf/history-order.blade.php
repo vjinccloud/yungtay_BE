@@ -183,7 +183,7 @@ td, th, div, span, p { font-family: notosanstc, sans-serif; }
             </tr>
             </table>
 
-            {{-- 客戶名稱 / 專案名稱 --}}
+            {{-- 客戶名稱 / 聯絡電話 --}}
             <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
             <tr>
                 <td width="49%" style="vertical-align:top;">
@@ -200,31 +200,10 @@ td, th, div, span, p { font-family: notosanstc, sans-serif; }
                 <td width="49%" style="vertical-align:top;">
                     <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
                         <tr>
-                            <td style="font-size:10px; color:#6A7282; padding-bottom:2px;">專案名稱</td>
+                            <td style="font-size:10px; color:#6A7282; padding-bottom:2px;">聯絡電話</td>
                         </tr>
                         <tr>
-                            <td style="font-size:11px; color:#101828; padding:5px 8px; border:1px solid #E5E7EB; height:22px;">{!! $order->project_name ?: '&nbsp;' !!}</td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-            </table>
-
-            {{-- row 間距 --}}
-            <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
-            <tr><td style="font-size:1px; line-height:1px; height:8px;">&nbsp;</td></tr>
-            </table>
-
-            {{-- 施工地點 (整列) --}}
-            <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
-            <tr>
-                <td>
-                    <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
-                        <tr>
-                            <td style="font-size:10px; color:#6A7282; padding-bottom:2px;">施工地點</td>
-                        </tr>
-                        <tr>
-                            <td style="font-size:11px; color:#101828; padding:5px 8px; border:1px solid #E5E7EB; height:22px;">{!! $order->construction_location ?: '&nbsp;' !!}</td>
+                            <td style="font-size:11px; color:#101828; padding:5px 8px; border:1px solid #E5E7EB; height:22px;">{!! $order->contact_phone ?: '&nbsp;' !!}</td>
                         </tr>
                     </table>
                 </td>
@@ -235,16 +214,16 @@ td, th, div, span, p { font-family: notosanstc, sans-serif; }
             <tr><td style="font-size:1px; line-height:1px; height:8px;">&nbsp;</td></tr>
             </table>
 
-            {{-- 客戶窗口姓名 / 信箱 --}}
+            {{-- 聯絡信箱 / 案件地區 --}}
             <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
             <tr>
                 <td width="49%" style="vertical-align:top;">
                     <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
                         <tr>
-                            <td style="font-size:10px; color:#6A7282; padding-bottom:2px;">客戶窗口姓名</td>
+                            <td style="font-size:10px; color:#6A7282; padding-bottom:2px;">聯絡信箱</td>
                         </tr>
                         <tr>
-                            <td style="font-size:11px; color:#101828; padding:5px 8px; border:1px solid #E5E7EB; height:22px;">{!! $order->customer_contact_name ?: '&nbsp;' !!}</td>
+                            <td style="font-size:11px; color:#101828; padding:5px 8px; border:1px solid #E5E7EB; height:22px;">{!! $order->contact_email ?: '&nbsp;' !!}</td>
                         </tr>
                     </table>
                 </td>
@@ -252,10 +231,10 @@ td, th, div, span, p { font-family: notosanstc, sans-serif; }
                 <td width="49%" style="vertical-align:top;">
                     <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
                         <tr>
-                            <td style="font-size:10px; color:#6A7282; padding-bottom:2px;">客戶窗口信箱</td>
+                            <td style="font-size:10px; color:#6A7282; padding-bottom:2px;">案件地區</td>
                         </tr>
                         <tr>
-                            <td style="font-size:11px; color:#101828; padding:5px 8px; border:1px solid #E5E7EB; height:22px;">{!! $order->customer_contact_email ?: '&nbsp;' !!}</td>
+                            <td style="font-size:11px; color:#101828; padding:5px 8px; border:1px solid #E5E7EB; height:22px;">{!! $order->case_area ?: '&nbsp;' !!}</td>
                         </tr>
                     </table>
                 </td>
@@ -266,43 +245,29 @@ td, th, div, span, p { font-family: notosanstc, sans-serif; }
             <tr><td style="font-size:1px; line-height:1px; height:8px;">&nbsp;</td></tr>
             </table>
 
-            {{-- 業務人員姓名 / 信箱 --}}
+            {{-- 電梯台數 / 電梯規格 --}}
             <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
             <tr>
-                <td width="49%" style="vertical-align:top;">
+                <td width="32%" style="vertical-align:top;">
                     <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
                         <tr>
-                            <td style="font-size:10px; color:#6A7282; padding-bottom:2px;">業務人員姓名</td>
+                            <td style="font-size:10px; color:#6A7282; padding-bottom:2px;">電梯台數</td>
                         </tr>
                         <tr>
-                            <td style="font-size:11px; color:#101828; padding:5px 8px; border:1px solid #E5E7EB; height:22px;">{!! $order->sales_name ?: '&nbsp;' !!}</td>
+                            <td style="font-size:11px; color:#101828; padding:5px 8px; border:1px solid #E5E7EB; height:22px;">{!! $order->elevator_count !== null ? $order->elevator_count : '&nbsp;' !!}</td>
                         </tr>
                     </table>
                 </td>
                 <td width="2%">&nbsp;</td>
-                <td width="49%" style="vertical-align:top;">
+                <td width="66%" style="vertical-align:top;">
                     <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
                         <tr>
-                            <td style="font-size:10px; color:#6A7282; padding-bottom:2px;">業務人員信箱</td>
+                            <td style="font-size:10px; color:#6A7282; padding-bottom:2px;">電梯規格</td>
                         </tr>
                         <tr>
-                            <td style="font-size:11px; color:#101828; padding:5px 8px; border:1px solid #E5E7EB; height:22px;">{!! $order->sales_email ?: '&nbsp;' !!}</td>
+                            <td style="font-size:11px; color:#101828; padding:5px 8px; border:1px solid #E5E7EB; height:22px;">{!! $order->elevator_spec ?: '&nbsp;' !!}</td>
                         </tr>
                     </table>
-                </td>
-            </tr>
-            </table>
-
-            <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
-            <tr><td style="font-size:1px; line-height:1px; height:10px;">&nbsp;</td></tr>
-            </table>
-
-            {{-- 業務連絡電話 --}}
-            <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
-            <tr>
-                <td>
-                    <span style="font-size:10px; color:#6A7282;">業務連絡電話:</span>
-                    <span style="font-size:12px; color:#101828;">{{ $order->sales_phone ?: '—' }}</span>
                 </td>
             </tr>
             </table>

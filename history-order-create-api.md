@@ -13,7 +13,6 @@
 ## 必填欄位
 - `order_name` (string, max:100)
 - `customer_name` (string, max:50)
-- `sales_name` (string, max:50)
 
 ---
 
@@ -23,30 +22,30 @@
 |---|---|---|---|
 | order_name | string | 是 | max:100 |
 | customer_name | string | 是 | max:50 |
-| project_name | string | 否 | max:100 |
-| construction_location | string | 否 | max:255 |
-| customer_contact_name | string | 否 | max:50 |
-| customer_contact_email | string(email) | 否 | email, max:100 |
+| contact_phone | string | 否 | max:30，聯絡電話 |
+| contact_email | string(email) | 否 | email, max:100，聯絡信箱 |
+| case_area | string | 否 | max:100，案件地區 |
+| elevator_count | integer | 否 | min:0，電梯台數 |
+| elevator_spec | string | 否 | max:100，電梯規格 |
 | series_model | string | 否 | max:50 |
-| sales_name | string | 是 | max:50 |
-| sales_email | string(email) | 否 | email, max:100 |
-| sales_phone | string | 否 | max:30 |
 | note | string | 否 | max:1000 |
 | elevator_image | file | 否 | image, mimes:jpeg/png/jpg/webp, max:5MB |
 | cabin_specs | object/array | 否 | 車廂規格（巢狀） |
-| cabin_specs.ceiling | any | 否 | - |
-| cabin_specs.door_panel | any | 否 | - |
-| cabin_specs.side_panel | any | 否 | - |
-| cabin_specs.floor | any | 否 | - |
-| cabin_specs.control_panel | any | 否 | - |
-| cabin_specs.handrail | any | 否 | - |
-| cabin_specs.trim | any | 否 | - |
+| cabin_specs.ceiling | any | 否 | 天井 |
+| cabin_specs.door_panel | any | 否 | 門板 |
+| cabin_specs.side_panel_left | any | 否 | 左側板 |
+| cabin_specs.side_panel_right | any | 否 | 右側板 |
+| cabin_specs.side_panel_rear | any | 否 | 後側板 |
+| cabin_specs.side_panel_front | any | 否 | 前側板 |
+| cabin_specs.floor | any | 否 | 地板 |
+| cabin_specs.control_panel | any | 否 | 操作盤 |
+| cabin_specs.handrail | any | 否 | 扶手 |
+| cabin_specs.trim | any | 否 | 飾條 |
 | entrance_specs | object/array | 否 | 乘場規格（巢狀） |
-| entrance_specs.door_panel | any | 否 | - |
-| entrance_specs.door_frame | any | 否 | - |
-| entrance_specs.door_column | any | 否 | - |
-| entrance_specs.floor | any | 否 | - |
-| entrance_specs.control_panel | any | 否 | - |
+| entrance_specs.door_panel | any | 否 | 門板 |
+| entrance_specs.door_frame | any | 否 | 門框 |
+| entrance_specs.floor | any | 否 | 廳燈 |
+| entrance_specs.control_panel | any | 否 | 操作盤 |
 
 ---
 
@@ -57,25 +56,25 @@ curl -X POST "https://你的網域/api/v1/history-orders" \
   -H "Accept: application/json" \
   -F "order_name=日立永大_某某建設" \
   -F "customer_name=某某建設" \
-  -F "project_name=XX大樓新建案" \
-  -F "construction_location=台北市信義區..." \
-  -F "customer_contact_name=王小明" \
-  -F "customer_contact_email=test@example.com" \
+  -F "contact_phone=0912-345-678" \
+  -F "contact_email=contact@example.com" \
+  -F "case_area=台北市信義區" \
+  -F "elevator_count=2" \
+  -F "elevator_spec=客梯 800kg / 11 人乘" \
   -F "series_model=EAS" \
-  -F "sales_name=陳業務" \
-  -F "sales_email=sales@example.com" \
-  -F "sales_phone=02-1234-5678" \
   -F "note=請優先處理" \
   -F "cabin_specs[ceiling]=CH5" \
   -F "cabin_specs[door_panel]=髮紋不銹鋼" \
-  -F "cabin_specs[side_panel]=鏡面不銹鋼" \
+  -F "cabin_specs[side_panel_left]=鏡面不銹鋼" \
+  -F "cabin_specs[side_panel_right]=鏡面不銹鋼" \
+  -F "cabin_specs[side_panel_rear]=鏡面不銹鋼" \
+  -F "cabin_specs[side_panel_front]=鏡面不銹鋼" \
   -F "cabin_specs[floor]=8TB" \
   -F "cabin_specs[control_panel]=BL-C2" \
   -F "cabin_specs[handrail]=NR-108" \
   -F "cabin_specs[trim]=鏡面不銹鋼" \
   -F "entrance_specs[door_panel]=NR-108" \
   -F "entrance_specs[door_frame]=窄型門框" \
-  -F "entrance_specs[door_column]=硬質鋁合金" \
   -F "entrance_specs[floor]=無" \
   -F "entrance_specs[control_panel]=HF-LM5" \
   -F "elevator_image=@/path/to/image.jpg"
@@ -89,8 +88,7 @@ curl -X POST "https://你的網域/api/v1/history-orders" \
 curl -X POST "https://你的網域/api/v1/history-orders" \
   -H "Accept: application/json" \
   -F "order_name=日立永大_某某建設" \
-  -F "customer_name=某某建設" \
-  -F "sales_name=陳業務"
+  -F "customer_name=某某建設"
 ```
 
 ---
@@ -104,7 +102,11 @@ curl -X POST "https://你的網域/api/v1/history-orders" \
     "id": 123,
     "order_name": "日立永大_某某建設",
     "customer_name": "某某建設",
-    "sales_name": "陳業務",
+    "contact_phone": "0912-345-678",
+    "contact_email": "contact@example.com",
+    "case_area": "台北市信義區",
+    "elevator_count": 2,
+    "elevator_spec": "客梯 800kg / 11 人乘",
     "elevator_image": "/uploads/history-orders/xxx.jpg"
   },
   "message": "歷史訂單已建立"
@@ -120,7 +122,7 @@ curl -X POST "https://你的網域/api/v1/history-orders" \
   "success": false,
   "errors": {
     "order_name": ["The order name field is required."],
-    "sales_name": ["The sales name field is required."]
+    "customer_name": ["The customer name field is required."]
   }
 }
 ```
