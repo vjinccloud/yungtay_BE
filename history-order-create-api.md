@@ -35,7 +35,7 @@
 | cabin_specs.door_panel | any | 否 | 門板 |
 | cabin_specs.side_panel_left | any | 否 | 左側板 |
 | cabin_specs.side_panel_right | any | 否 | 右側板 |
-| cabin_specs.side_panel_rear | any | 否 | 後側板 |
+| cabin_specs.side_panel_back | any | 否 | 後側板 |
 | cabin_specs.side_panel_front | any | 否 | 前側板 |
 | cabin_specs.floor | any | 否 | 地板 |
 | cabin_specs.control_panel | any | 否 | 操作盤 |
@@ -44,7 +44,7 @@
 | entrance_specs | object/array | 否 | 乘場規格（巢狀） |
 | entrance_specs.door_panel | any | 否 | 門板 |
 | entrance_specs.door_frame | any | 否 | 門框 |
-| entrance_specs.floor | any | 否 | 廳燈 |
+| entrance_specs.lantern | any | 否 | 廳燈 |
 | entrance_specs.control_panel | any | 否 | 操作盤 |
 
 ---
@@ -67,7 +67,7 @@ curl -X POST "https://你的網域/api/v1/history-orders" \
   -F "cabin_specs[door_panel]=髮紋不銹鋼" \
   -F "cabin_specs[side_panel_left]=鏡面不銹鋼" \
   -F "cabin_specs[side_panel_right]=鏡面不銹鋼" \
-  -F "cabin_specs[side_panel_rear]=鏡面不銹鋼" \
+  -F "cabin_specs[side_panel_back]=鏡面不銹鋼" \
   -F "cabin_specs[side_panel_front]=鏡面不銹鋼" \
   -F "cabin_specs[floor]=8TB" \
   -F "cabin_specs[control_panel]=BL-C2" \
@@ -75,7 +75,7 @@ curl -X POST "https://你的網域/api/v1/history-orders" \
   -F "cabin_specs[trim]=鏡面不銹鋼" \
   -F "entrance_specs[door_panel]=NR-108" \
   -F "entrance_specs[door_frame]=窄型門框" \
-  -F "entrance_specs[floor]=無" \
+  -F "entrance_specs[lantern]=無" \
   -F "entrance_specs[control_panel]=HF-LM5" \
   -F "elevator_image=@/path/to/image.jpg"
 ```

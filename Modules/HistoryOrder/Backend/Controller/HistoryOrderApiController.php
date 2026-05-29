@@ -37,7 +37,7 @@ class HistoryOrderApiController extends Controller
             'cabin_specs.door_panel' => 'nullable',
             'cabin_specs.side_panel_left'  => 'nullable',
             'cabin_specs.side_panel_right' => 'nullable',
-            'cabin_specs.side_panel_rear'  => 'nullable',
+            'cabin_specs.side_panel_back'  => 'nullable',
             'cabin_specs.side_panel_front' => 'nullable',
             'cabin_specs.floor'      => 'nullable',
             'cabin_specs.control_panel' => 'nullable',
@@ -46,7 +46,7 @@ class HistoryOrderApiController extends Controller
             'entrance_specs'              => 'nullable|array',
             'entrance_specs.door_panel'   => 'nullable',
             'entrance_specs.door_frame'   => 'nullable',
-            'entrance_specs.floor'        => 'nullable',
+            'entrance_specs.lantern'      => 'nullable',
             'entrance_specs.control_panel' => 'nullable',
         ]);
 
@@ -137,7 +137,7 @@ class HistoryOrderApiController extends Controller
                     'door_panel'        => $doorPanels[array_rand($doorPanels)],
                     'side_panel_left'   => "{$baseSide}　左側板",
                     'side_panel_right'  => "{$baseSide}　右側板",
-                    'side_panel_rear'   => "{$baseSide}　後側板",
+                    'side_panel_back'   => "{$baseSide}　後側板",
                     'side_panel_front'  => "{$baseSide}　前側板",
                     'floor'             => $floors[array_rand($floors)],
                     'control_panel'     => $controlPanels[array_rand($controlPanels)] . "　車廂操作盤\n無　無障礙操作盤",
@@ -147,7 +147,7 @@ class HistoryOrderApiController extends Controller
                 'entrance_specs' => [
                     'door_panel'    => 'NR-108',
                     'door_frame'    => $doorFrames[array_rand($doorFrames)],
-                    'floor'         => '無',
+                    'lantern'       => '無',
                     'control_panel' => "BL-C2　乘場操作盤\nHF-LM5(LED)　乘場指示器",
                 ],
             ];
