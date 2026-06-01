@@ -264,7 +264,7 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" style="font-size:0.7rem;"></button>
                             </div>
                             <!-- 渲染圖 -->
-                            <div class="text-center px-4 mb-3 flex-grow-1 d-flex align-items-center justify-content-center" style="background:#FFF; max-height:320px; overflow:hidden; border-bottom-left-radius:0.5rem; border-bottom-right-radius:0.5rem;">
+                            <div class="text-center px-4 mb-3 flex-grow-1 d-flex align-items-center justify-content-center" style="background:#FFF; max-height:320px; min-height:405px; overflow:hidden; border-bottom-left-radius:0.5rem; border-bottom-right-radius:0.5rem;">
                                 <img
                                     v-if="detailOrder.elevator_image"
                                     :src="detailOrder.elevator_image"

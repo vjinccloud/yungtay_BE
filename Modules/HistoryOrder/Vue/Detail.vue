@@ -80,7 +80,7 @@
                             <Link :href="route('admin.history-order.index')" class="btn-close" style="font-size:0.7rem;"></Link>
                         </div>
                         <!-- 渲染圖 -->
-                        <div class="text-center px-4 mb-3 flex-grow-1 d-flex align-items-center justify-content-center" style="background:#FFF; max-height:320px; overflow:hidden; min-height:320px;">
+                        <div class="text-center px-4 mb-3 flex-grow-1 d-flex align-items-center justify-content-center" style="background:#FFF; max-height:320px; overflow:hidden; min-height:405px;">
                             <img
                                 v-if="order.elevator_image"
                                 :src="order.elevator_image"
