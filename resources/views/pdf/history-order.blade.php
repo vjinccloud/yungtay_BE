@@ -176,10 +176,10 @@ td, th, div, span, p { font-family: notosanstc, sans-serif; }
             </table>
             @endif
 
-            {{-- 客戶訂單資料 標題 --}}
+            {{-- 客戶聯絡資料 標題 --}}
             <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
             <tr>
-                <td style="font-size:13px; font-weight:bold; color:#1E2939; padding-bottom:6px;">客戶訂單資料</td>
+                <td style="font-size:13px; font-weight:bold; color:#1E2939; padding-bottom:6px;">客戶聯絡資料</td>
             </tr>
             </table>
 
@@ -268,27 +268,6 @@ td, th, div, span, p { font-family: notosanstc, sans-serif; }
                 <td style="font-size:11px; color:#101828; padding:5px 8px; border:1px solid #E5E7EB; min-height:22px;">{!! $order->elevator_spec ? nl2br(e($order->elevator_spec)) : '&nbsp;' !!}</td>
             </tr>
             </table>
-
-            {{-- 備註 --}}
-            @if ($order->note)
-            <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
-            <tr><td style="font-size:1px; line-height:1px; height:8px;">&nbsp;</td></tr>
-            </table>
-            <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
-            <tr>
-                <td>
-                    <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
-                        <tr>
-                            <td style="font-size:10px; color:#6A7282; padding-bottom:2px;">備註</td>
-                        </tr>
-                        <tr>
-                            <td style="font-size:11px; color:#101828; padding:5px 8px; border:1px solid #E5E7EB;">{!! nl2br(e($order->note)) !!}</td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-            </table>
-            @endif
 
         </td>
     </tr>

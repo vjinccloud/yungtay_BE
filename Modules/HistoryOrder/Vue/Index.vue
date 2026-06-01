@@ -257,7 +257,7 @@
                             <div class="text-center px-4 mb-3 flex-grow-1 d-flex align-items-center justify-content-center" style="background:#FFF; min-height:220px; max-height:320px; overflow:hidden; border-bottom-left-radius:0.5rem; border-bottom-right-radius:0.5rem;">
                                 <img
                                     v-if="detailOrder.elevator_image"
-                                    :src="detailOrder.elevator_image"
+                                    :src="elevatorImageSrc"
                                     alt="電梯渲染圖"
                                     class="img-fluid rounded shadow-sm"
                                     style="max-height:320px; max-width:610px; object-fit:contain;"
@@ -268,9 +268,9 @@
                                 </div>
                             </div>
 
-                            <!-- 客戶訂單資料 -->
+                            <!-- 客戶聯絡資料 -->
                             <div class="px-4 pb-3" style="background:#FFF; padding-top:10px; border-radius:0.5rem;">
-                                <div class="fw-bold pb-1" style="font-size:0.95rem; color:#1E2939;">客戶訂單資料</div>
+                                <div class="fw-bold pb-1" style="font-size:0.95rem; color:#1E2939;">客戶聯絡資料</div>
                                 <div class="row g-2 mb-2">
                                     <div class="col-6">
                                         <label class="form-label text-muted mb-0" style="font-size:0.7rem; color:#6A7282;">客戶名稱</label>
@@ -380,6 +380,14 @@ export default {
         const getEntranceSpec = (key) => {
             return detailOrder.value?.entrance_specs?.[key] || null;
         };
+
+        // 渲染圖加上 cache-busting 版本戳，避免換圖後瀏覽器沿用舊快取
+        const elevatorImageSrc = computed(() => {
+            const o = detailOrder.value;
+            if (!o?.elevator_image) return '';
+            const ver = o.updated_at ? new Date(o.updated_at).getTime() : Date.now();
+            return o.elevator_image + (o.elevator_image.includes('?') ? '&' : '?') + 't=' + ver;
+        });
 
         const specRows = computed(() => {
             const cabinKeys = Object.keys(props.cabinSpecFields);
@@ -525,6 +533,7 @@ export default {
             selectedIds,
             detailModalRef,
             detailOrder,
+            elevatorImageSrc,
             specRows,
             openDetail,
             closeDetail,
