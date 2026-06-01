@@ -291,25 +291,23 @@
                                         <div class="form-control form-control-sm bg-light" style="font-size:0.8rem; background-color:transparent !important; border:1px solid #E5E7EB;">{{ detailOrder.contact_phone || '—' }}</div>
                                     </div>
                                 </div>
+                                <div class="mb-2">
+                                    <label class="form-label text-muted mb-0" style="font-size:0.7rem; color:#6A7282;">聯絡信箱</label>
+                                    <div class="form-control form-control-sm bg-light" style="font-size:0.8rem; background-color:transparent !important; border:1px solid #E5E7EB;">{{ detailOrder.contact_email || '—' }}</div>
+                                </div>
                                 <div class="row g-2 mb-2">
-                                    <div class="col-6">
-                                        <label class="form-label text-muted mb-0" style="font-size:0.7rem; color:#6A7282;">聯絡信箱</label>
-                                        <div class="form-control form-control-sm bg-light" style="font-size:0.8rem; background-color:transparent !important; border:1px solid #E5E7EB;">{{ detailOrder.contact_email || '—' }}</div>
-                                    </div>
                                     <div class="col-6">
                                         <label class="form-label text-muted mb-0" style="font-size:0.7rem; color:#6A7282;">案件地區</label>
                                         <div class="form-control form-control-sm bg-light" style="font-size:0.8rem; background-color:transparent !important; border:1px solid #E5E7EB;">{{ detailOrder.case_area || '—' }}</div>
                                     </div>
-                                </div>
-                                <div class="row g-2 mb-2">
-                                    <div class="col-4">
+                                    <div class="col-6">
                                         <label class="form-label text-muted mb-0" style="font-size:0.7rem; color:#6A7282;">電梯台數</label>
                                         <div class="form-control form-control-sm bg-light" style="font-size:0.8rem; background-color:transparent !important; border:1px solid #E5E7EB;">{{ detailOrder.elevator_count ?? '—' }}</div>
                                     </div>
-                                    <div class="col-8">
-                                        <label class="form-label text-muted mb-0" style="font-size:0.7rem; color:#6A7282;">電梯規格</label>
-                                        <div class="form-control form-control-sm bg-light" style="font-size:0.8rem; background-color:transparent !important; border:1px solid #E5E7EB;">{{ detailOrder.elevator_spec || '—' }}</div>
-                                    </div>
+                                </div>
+                                <div class="mb-2">
+                                    <label class="form-label text-muted mb-0" style="font-size:0.7rem; color:#6A7282;">電梯規格</label>
+                                    <div class="form-control form-control-sm bg-light" style="font-size:0.8rem; background-color:transparent !important; border:1px solid #E5E7EB; min-height:60px; white-space:pre-wrap;">{{ detailOrder.elevator_spec || '—' }}</div>
                                 </div>
                                 <div class="d-flex justify-content-end align-items-end">
                                     <a

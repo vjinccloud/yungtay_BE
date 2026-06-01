@@ -5,134 +5,137 @@
         <BreadcrumbItem />
 
         <div class="block block-rounded">
-            <div class="block-header block-header-default d-flex align-items-center">
-                <h3 class="block-title">
-                    規格 <span class="text-primary">({{ order.series_model }} 系列)</span>
-                </h3>
-                <div class="block-options">
-                    <Link :href="route('admin.history-order.index')" class="btn btn-sm btn-alt-secondary">
-                        <i class="fa fa-times"></i>
-                    </Link>
-                </div>
-            </div>
-
-            <div class="block-content block-content-full">
-                <div class="row">
-                    <!-- 左欄：電梯規格 -->
-                    <div class="col-lg-6">
-                        <div class="row">
-                            <!-- 車廂 -->
-                            <div class="col-6">
-                                <h6 class="fw-bold border-bottom pb-2 mb-3">
-                                    <i class="fa fa-cube me-1 text-primary"></i> 車廂
-                                </h6>
-                                <div v-for="(field, key) in cabinSpecFields" :key="'cabin-' + key" class="spec-row mb-3">
-                                    <div class="d-flex align-items-start">
-                                        <div class="spec-icon me-2">
-                                            <i :class="'fa ' + field.icon" class="text-muted"></i>
-                                        </div>
-                                        <div>
-                                            <div class="spec-label text-muted small">{{ field.label }}</div>
-                                            <div class="spec-value fw-semibold">
-                                                <template v-if="getCabinSpec(key)">
-                                                    <div v-for="(line, idx) in formatSpecLines(getCabinSpec(key))" :key="idx" class="spec-line">
-                                                        {{ line }}
-                                                    </div>
-                                                </template>
-                                                <span v-else class="text-muted">—</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- 出入口 -->
-                            <div class="col-6">
-                                <h6 class="fw-bold border-bottom pb-2 mb-3">
-                                    <i class="fa fa-door-open me-1 text-primary"></i> 出入口
-                                </h6>
-                                <div v-for="(field, key) in entranceSpecFields" :key="'entrance-' + key" class="spec-row mb-3">
-                                    <div class="d-flex align-items-start">
-                                        <div class="spec-icon me-2">
-                                            <i :class="'fa ' + field.icon" class="text-muted"></i>
-                                        </div>
-                                        <div>
-                                            <div class="spec-label text-muted small">{{ field.label }}</div>
-                                            <div class="spec-value fw-semibold">
-                                                <template v-if="getEntranceSpec(key)">
-                                                    <div v-for="(line, idx) in formatSpecLines(getEntranceSpec(key))" :key="idx" class="spec-line">
-                                                        {{ line }}
-                                                    </div>
-                                                </template>
-                                                <span v-else class="text-muted">—</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 右欄：渲染圖 + 客戶資料 -->
-                    <div class="col-lg-6">
-                        <!-- ELEVATOR STYLE -->
-                        <div class="text-center mb-4">
-                            <h6 class="fw-bold text-muted mb-3">ELEVATOR STYLE</h6>
-                            <div class="elevator-image-wrapper border rounded p-3 bg-body-light">
-                                <img
-                                    v-if="order.elevator_image"
-                                    :src="order.elevator_image"
-                                    alt="電梯渲染圖"
-                                    class="img-fluid rounded"
-                                    style="max-height: 300px;"
-                                />
-                                <div v-else class="text-muted py-5">
-                                    <i class="fa fa-image fa-3x mb-2 d-block opacity-50"></i>
-                                    <span>電梯渲染圖</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 客戶訂單資料 -->
-                        <div class="customer-info">
-                            <h6 class="fw-bold text-white bg-primary px-3 py-2 rounded-top mb-0">
-                                客戶訂單資料
+            <div class="block-content p-0 overflow-hidden">
+                <div class="row g-0" style="min-height:600px;">
+                    <!-- ====== 左側面板：規格 ====== -->
+                    <div class="col-lg-6" style="background:#FFF; overflow:hidden;">
+                        <!-- 左側 Header -->
+                        <div class="px-3 py-2" style="background:#464C53;border-bottom:1px solid #EDEDED;">
+                            <h6 class="mb-0 fw-bold" style="font-size:0.9rem;color:#ccc;">
+                                規格 ({{ order.series_model }} 系列)
                             </h6>
-                            <table class="table table-bordered table-sm mb-0">
+                        </div>
+                        <!-- 規格表格 -->
+                        <div>
+                            <table style="width:100%;border-collapse:collapse;">
+                                <thead>
+                                    <tr style="border-bottom:1px solid #EDEDED;">
+                                        <th colspan="2" style="padding:8px 12px;font-size:0.8rem;color:#1E2939;font-weight:600;width:50%;border-right:1px solid #EDEDED;background:#F5F5F5;">車廂</th>
+                                        <th colspan="2" style="padding:8px 12px;font-size:0.8rem;color:#1E2939;font-weight:600;background:#F5F5F5;">出入口</th>
+                                    </tr>
+                                </thead>
                                 <tbody>
-                                    <tr>
-                                        <th class="bg-body-light" style="width: 25%;">客戶名稱</th>
-                                        <td style="width: 25%;">{{ order.customer_name || '—' }}</td>
-                                        <th class="bg-body-light" style="width: 25%;">聯絡電話</th>
-                                        <td style="width: 25%;">{{ order.contact_phone || '—' }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="bg-body-light">聯絡信箱</th>
-                                        <td>{{ order.contact_email || '—' }}</td>
-                                        <th class="bg-body-light">案件地區</th>
-                                        <td>{{ order.case_area || '—' }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="bg-body-light">電梯台數</th>
-                                        <td>{{ order.elevator_count ?? '—' }}</td>
-                                        <th class="bg-body-light">電梯規格</th>
-                                        <td>{{ order.elevator_spec || '—' }}</td>
+                                    <tr v-for="(row, rowIdx) in specRows" :key="rowIdx" style="border-bottom:1px solid #EDEDED;">
+                                        <!-- 車廂欄 -->
+                                        <template v-if="row.cabin">
+                                            <td style="width:70px;padding:8px 4px 8px 8px;border-right:1px solid #EDEDED;vertical-align:middle;text-align:center;">
+                                                <i><img :src="row.cabin.icon" style="width:34px;"></i><br />
+                                                <span style="font-size:0.7rem;color:#4A5565;">{{ row.cabin.label }}</span>
+                                            </td>
+                                            <td style="padding:8px 8px 8px 4px;vertical-align:middle;font-size:0.8rem;color:#101828;line-height:1.5;border-right:1px solid #EDEDED;">
+                                                <template v-if="row.cabin.value">
+                                                    <div v-for="(line, idx) in formatSpecLines(row.cabin.value)" :key="idx"
+                                                         :style="line.subLabel ? 'display:flex;justify-content:space-between;' : ''">
+                                                        <span>{{ line.value }}</span>
+                                                        <span v-if="line.subLabel" style="color:#99A1AF;">{{ line.subLabel }}</span>
+                                                    </div>
+                                                </template>
+                                                <span v-else style="color:#99A1AF;">—</span>
+                                            </td>
+                                        </template>
+                                        <template v-else>
+                                            <td colspan="2" style="border-right:1px solid #EDEDED;"></td>
+                                        </template>
+                                        <!-- 出入口欄 -->
+                                        <template v-if="row.entrance">
+                                            <td style="width:70px;padding:8px 4px 8px 8px;border-right:1px solid #EDEDED;vertical-align:middle;text-align:center;">
+                                                <i><img :src="row.entrance.icon" style="width:34px;"></i><br />
+                                                <span style="font-size:0.7rem;color:#4A5565;">{{ row.entrance.label }}</span>
+                                            </td>
+                                            <td style="padding:8px 8px 8px 4px;vertical-align:middle;font-size:0.8rem;color:#101828;line-height:1.5;">
+                                                <template v-if="row.entrance.value">
+                                                    <div v-for="(line, idx) in formatSpecLines(row.entrance.value)" :key="idx"
+                                                         :style="line.subLabel ? 'display:flex;justify-content:space-between;' : ''">
+                                                        <span>{{ line.value }}</span>
+                                                        <span v-if="line.subLabel" style="color:#99A1AF;">{{ line.subLabel }}</span>
+                                                    </div>
+                                                </template>
+                                                <span v-else style="color:#99A1AF;">—</span>
+                                            </td>
+                                        </template>
+                                        <template v-else>
+                                            <td colspan="2"></td>
+                                        </template>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                </div>
 
-                <!-- 匯出 PDF -->
-                <div class="d-flex justify-content-end mt-4 mb-3">
-                    <a
-                        :href="route('admin.history-order.export-pdf', order.id)"
-                        class="btn btn-danger"
-                        target="_blank"
-                    >
-                        <i class="fa fa-file-pdf me-1"></i> 匯出 PDF
-                    </a>
+                    <!-- ====== 右側面板：渲染圖 + 客戶資料 ====== -->
+                    <div class="col-lg-6 d-flex flex-column" style="color:#333;">
+                        <!-- ELEVATOR STYLE + 關閉按鈕 -->
+                        <div class="d-flex justify-content-between align-items-center px-4 pt-3 pb-2" style="background:#FFF;">
+                            <h6 class="fw-bold mb-0" style="color:#E3E3E3; letter-spacing:1px;">ELEVATOR STYLE</h6>
+                            <Link :href="route('admin.history-order.index')" class="btn-close" style="font-size:0.7rem;"></Link>
+                        </div>
+                        <!-- 渲染圖 -->
+                        <div class="text-center px-4 mb-3 flex-grow-1 d-flex align-items-center justify-content-center" style="background:#FFF; max-height:320px; overflow:hidden; min-height:320px;">
+                            <img
+                                v-if="order.elevator_image"
+                                :src="order.elevator_image"
+                                alt="電梯渲染圖"
+                                class="img-fluid rounded shadow-sm"
+                                style="max-height:320px; max-width:610px; object-fit:contain;"
+                            />
+                            <div v-else class="text-muted py-5">
+                                <i class="fa fa-image fa-3x mb-2 d-block opacity-50"></i>
+                                <span>電梯渲染圖</span>
+                            </div>
+                        </div>
+
+                        <!-- 客戶訂單資料 -->
+                        <div class="px-4 pb-3" style="background:#FFF; padding-top:10px;">
+                            <div class="fw-bold pb-1" style="font-size:0.95rem; color:#1E2939;">客戶訂單資料</div>
+                            <div class="row g-2 mb-2">
+                                <div class="col-6">
+                                    <label class="form-label text-muted mb-0" style="font-size:0.7rem; color:#6A7282;">客戶名稱</label>
+                                    <div class="form-control form-control-sm" style="font-size:0.8rem; background-color:transparent; border:1px solid #E5E7EB;">{{ order.customer_name || '—' }}</div>
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label text-muted mb-0" style="font-size:0.7rem; color:#6A7282;">聯絡電話</label>
+                                    <div class="form-control form-control-sm" style="font-size:0.8rem; background-color:transparent; border:1px solid #E5E7EB;">{{ order.contact_phone || '—' }}</div>
+                                </div>
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label text-muted mb-0" style="font-size:0.7rem; color:#6A7282;">聯絡信箱</label>
+                                <div class="form-control form-control-sm" style="font-size:0.8rem; background-color:transparent; border:1px solid #E5E7EB;">{{ order.contact_email || '—' }}</div>
+                            </div>
+                            <div class="row g-2 mb-2">
+                                <div class="col-6">
+                                    <label class="form-label text-muted mb-0" style="font-size:0.7rem; color:#6A7282;">案件地區</label>
+                                    <div class="form-control form-control-sm" style="font-size:0.8rem; background-color:transparent; border:1px solid #E5E7EB;">{{ order.case_area || '—' }}</div>
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label text-muted mb-0" style="font-size:0.7rem; color:#6A7282;">電梯台數</label>
+                                    <div class="form-control form-control-sm" style="font-size:0.8rem; background-color:transparent; border:1px solid #E5E7EB;">{{ order.elevator_count ?? '—' }}</div>
+                                </div>
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label text-muted mb-0" style="font-size:0.7rem; color:#6A7282;">電梯規格</label>
+                                <div class="form-control form-control-sm" style="font-size:0.8rem; background-color:transparent; border:1px solid #E5E7EB; min-height:60px; white-space:pre-wrap;">{{ order.elevator_spec || '—' }}</div>
+                            </div>
+                            <div class="d-flex justify-content-end align-items-end">
+                                <a
+                                    :href="route('admin.history-order.export-pdf', order.id)"
+                                    class="btn btn-sm btn-danger"
+                                    target="_blank"
+                                >
+                                    <i class="fa fa-file-pdf me-1"></i> 匯出 PDF
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -140,6 +143,7 @@
 </template>
 
 <script>
+import { computed } from "vue";
 import { Link } from "@inertiajs/vue3";
 import Layout from "@/Shared/Admin/Layout.vue";
 import BreadcrumbItem from "@/Shared/Admin/Partials/BreadcrumbItem.vue";
@@ -152,56 +156,51 @@ export default {
         entranceSpecFields: { type: Object, default: () => ({}) },
     },
     setup(props) {
-        const getCabinSpec = (key) => {
-            return props.order.cabin_specs?.[key] || null;
-        };
-
-        const getEntranceSpec = (key) => {
-            return props.order.entrance_specs?.[key] || null;
-        };
+        const specRows = computed(() => {
+            const cabinKeys = Object.keys(props.cabinSpecFields);
+            const entranceKeys = Object.keys(props.entranceSpecFields);
+            const maxLen = Math.max(cabinKeys.length, entranceKeys.length);
+            const rows = [];
+            for (let i = 0; i < maxLen; i++) {
+                const cKey = cabinKeys[i];
+                const eKey = entranceKeys[i];
+                rows.push({
+                    cabin: cKey ? {
+                        icon: props.cabinSpecFields[cKey].icon,
+                        label: props.cabinSpecFields[cKey].label,
+                        value: props.order?.cabin_specs?.[cKey] || null,
+                    } : null,
+                    entrance: eKey ? {
+                        icon: props.entranceSpecFields[eKey].icon,
+                        label: props.entranceSpecFields[eKey].label,
+                        value: props.order?.entrance_specs?.[eKey] || null,
+                    } : null,
+                });
+            }
+            return rows;
+        });
 
         const formatSpecLines = (value) => {
-            if (Array.isArray(value)) return value;
-            if (typeof value === 'string') return value.split('\n');
-            return [String(value)];
+            const lines = Array.isArray(value)
+                ? value
+                : typeof value === 'string'
+                    // 相容字面 \n（單引號 PHP 字串存入的舊資料）與真實換行
+                    ? value.replace(/\\n/g, '\n').split('\n')
+                    : [String(value)];
+            return lines.map(line => {
+                const parts = line.split('　'); // 全形空格分隔
+                if (parts.length >= 2) {
+                    return { value: parts[0].trim(), subLabel: parts.slice(1).join('　').trim() };
+                }
+                return { value: line.trim(), subLabel: null };
+            });
         };
 
         return {
-            getCabinSpec,
-            getEntranceSpec,
+            specRows,
             formatSpecLines,
         };
     },
     layout: Layout,
 };
 </script>
-
-<style scoped>
-.spec-icon {
-    width: 24px;
-    text-align: center;
-    padding-top: 2px;
-}
-
-.spec-line {
-    line-height: 1.5;
-    font-size: 0.875rem;
-}
-
-.elevator-image-wrapper {
-    min-height: 200px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.customer-info .table th {
-    font-size: 0.8125rem;
-    font-weight: 600;
-    white-space: nowrap;
-}
-
-.customer-info .table td {
-    font-size: 0.8125rem;
-}
-</style>

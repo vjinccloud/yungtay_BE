@@ -214,20 +214,23 @@ td, th, div, span, p { font-family: notosanstc, sans-serif; }
             <tr><td style="font-size:1px; line-height:1px; height:8px;">&nbsp;</td></tr>
             </table>
 
-            {{-- 聯絡信箱 / 案件地區 --}}
+            {{-- 聯絡信箱 (整列) --}}
             <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
             <tr>
-                <td width="49%" style="vertical-align:top;">
-                    <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
-                        <tr>
-                            <td style="font-size:10px; color:#6A7282; padding-bottom:2px;">聯絡信箱</td>
-                        </tr>
-                        <tr>
-                            <td style="font-size:11px; color:#101828; padding:5px 8px; border:1px solid #E5E7EB; height:22px;">{!! $order->contact_email ?: '&nbsp;' !!}</td>
-                        </tr>
-                    </table>
-                </td>
-                <td width="2%">&nbsp;</td>
+                <td style="font-size:10px; color:#6A7282; padding-bottom:2px;">聯絡信箱</td>
+            </tr>
+            <tr>
+                <td style="font-size:11px; color:#101828; padding:5px 8px; border:1px solid #E5E7EB; height:22px;">{!! $order->contact_email ?: '&nbsp;' !!}</td>
+            </tr>
+            </table>
+
+            <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
+            <tr><td style="font-size:1px; line-height:1px; height:8px;">&nbsp;</td></tr>
+            </table>
+
+            {{-- 案件地區 / 電梯台數 --}}
+            <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
+            <tr>
                 <td width="49%" style="vertical-align:top;">
                     <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
                         <tr>
@@ -238,17 +241,8 @@ td, th, div, span, p { font-family: notosanstc, sans-serif; }
                         </tr>
                     </table>
                 </td>
-            </tr>
-            </table>
-
-            <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
-            <tr><td style="font-size:1px; line-height:1px; height:8px;">&nbsp;</td></tr>
-            </table>
-
-            {{-- 電梯台數 / 電梯規格 --}}
-            <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
-            <tr>
-                <td width="32%" style="vertical-align:top;">
+                <td width="2%">&nbsp;</td>
+                <td width="49%" style="vertical-align:top;">
                     <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
                         <tr>
                             <td style="font-size:10px; color:#6A7282; padding-bottom:2px;">電梯台數</td>
@@ -258,17 +252,20 @@ td, th, div, span, p { font-family: notosanstc, sans-serif; }
                         </tr>
                     </table>
                 </td>
-                <td width="2%">&nbsp;</td>
-                <td width="66%" style="vertical-align:top;">
-                    <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
-                        <tr>
-                            <td style="font-size:10px; color:#6A7282; padding-bottom:2px;">電梯規格</td>
-                        </tr>
-                        <tr>
-                            <td style="font-size:11px; color:#101828; padding:5px 8px; border:1px solid #E5E7EB; height:22px;">{!! $order->elevator_spec ?: '&nbsp;' !!}</td>
-                        </tr>
-                    </table>
-                </td>
+            </tr>
+            </table>
+
+            <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
+            <tr><td style="font-size:1px; line-height:1px; height:8px;">&nbsp;</td></tr>
+            </table>
+
+            {{-- 電梯規格 (整列) --}}
+            <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
+            <tr>
+                <td style="font-size:10px; color:#6A7282; padding-bottom:2px;">電梯規格</td>
+            </tr>
+            <tr>
+                <td style="font-size:11px; color:#101828; padding:5px 8px; border:1px solid #E5E7EB; min-height:22px;">{!! $order->elevator_spec ? nl2br(e($order->elevator_spec)) : '&nbsp;' !!}</td>
             </tr>
             </table>
 
