@@ -22,11 +22,11 @@
                         />
                     </div>
                     <div class="col-md-2">
-                        <label class="form-label small mb-1">訂單名稱 <span class="text-danger">*</span></label>
+                        <label class="form-label small mb-1">縣市地區</label>
                         <input
                             type="text"
                             class="form-control form-control-sm"
-                            v-model="filterForm.order_name"
+                            v-model="filterForm.case_area"
                             placeholder="請輸入"
                             @keydown.enter="applyFilter"
                         />
@@ -37,16 +37,6 @@
                             type="text"
                             class="form-control form-control-sm"
                             v-model="filterForm.series_model"
-                            placeholder="請輸入"
-                            @keydown.enter="applyFilter"
-                        />
-                    </div>
-                    <div class="col-md-2">
-                        <label class="form-label small mb-1">客戶名稱</label>
-                        <input
-                            type="text"
-                            class="form-control form-control-sm"
-                            v-model="filterForm.customer_name"
                             placeholder="請輸入"
                             @keydown.enter="applyFilter"
                         />
@@ -86,16 +76,16 @@
                                         <i class="fa fa-sort ms-1 text-muted" style="cursor: pointer;" @click="toggleSort('updated_at')"></i>
                                     </th>
                                     <th>
-                                        訂單
-                                        <i class="fa fa-sort ms-1 text-muted" style="cursor: pointer;" @click="toggleSort('order_name')"></i>
+                                        客戶名稱
+                                        <i class="fa fa-sort ms-1 text-muted" style="cursor: pointer;" @click="toggleSort('customer_name')"></i>
+                                    </th>
+                                    <th style="width: 140px;" class="text-center">
+                                        縣市
+                                        <i class="fa fa-sort ms-1 text-muted" style="cursor: pointer;" @click="toggleSort('case_area')"></i>
                                     </th>
                                     <th style="width: 100px;" class="text-center">
                                         型號
                                         <i class="fa fa-sort ms-1 text-muted" style="cursor: pointer;" @click="toggleSort('series_model')"></i>
-                                    </th>
-                                    <th style="width: 140px;" class="text-center">
-                                        客戶名稱
-                                        <i class="fa fa-sort ms-1 text-muted" style="cursor: pointer;" @click="toggleSort('customer_name')"></i>
                                     </th>
                                     <th style="width: 80px;" class="text-center">功能</th>
                                 </tr>
@@ -114,16 +104,16 @@
                                         {{ formatDate(item.updated_at) }}
                                     </td>
                                     <td>
-                                        {{ item.order_name }}
+                                        {{ item.customer_name }}
+                                    </td>
+                                    <td class="text-center">
+                                        {{ item.case_area || '-' }}
                                     </td>
                                     <td class="text-center">
                                         <span v-if="item.series_model" class="badge bg-info rounded-pill">
                                             {{ item.series_model }}
                                         </span>
                                         <span v-else class="text-muted">-</span>
-                                    </td>
-                                    <td class="text-center">
-                                        {{ item.customer_name }}
                                     </td>
                                     <td class="text-center">
                                         <button
@@ -264,7 +254,7 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" style="font-size:0.7rem;"></button>
                             </div>
                             <!-- 渲染圖 -->
-                            <div class="text-center px-4 mb-3 flex-grow-1 d-flex align-items-center justify-content-center" style="background:#FFF; max-height:320px; min-height:405px; overflow:hidden; border-bottom-left-radius:0.5rem; border-bottom-right-radius:0.5rem;">
+                            <div class="text-center px-4 mb-3 flex-grow-1 d-flex align-items-center justify-content-center" style="background:#FFF; min-height:220px; max-height:320px; overflow:hidden; border-bottom-left-radius:0.5rem; border-bottom-right-radius:0.5rem;">
                                 <img
                                     v-if="detailOrder.elevator_image"
                                     :src="detailOrder.elevator_image"
@@ -433,17 +423,15 @@ export default {
 
         const filterForm = reactive({
             date:          props.filters?.date || '',
-            order_name:    props.filters?.order_name || '',
+            case_area:     props.filters?.case_area || '',
             series_model:  props.filters?.series_model || '',
-            customer_name: props.filters?.customer_name || '',
         });
 
         const buildQuery = (extra = {}) => {
             const params = {};
-            if (filterForm.date)           params.date           = filterForm.date;
-            if (filterForm.order_name)     params.order_name     = filterForm.order_name;
-            if (filterForm.series_model)   params.series_model   = filterForm.series_model;
-            if (filterForm.customer_name)  params.customer_name  = filterForm.customer_name;
+            if (filterForm.date)          params.date         = filterForm.date;
+            if (filterForm.case_area)     params.case_area    = filterForm.case_area;
+            if (filterForm.series_model)  params.series_model = filterForm.series_model;
             return { ...params, ...extra };
         };
 
@@ -456,9 +444,8 @@ export default {
 
         const resetFilter = () => {
             filterForm.date = '';
-            filterForm.order_name = '';
+            filterForm.case_area = '';
             filterForm.series_model = '';
-            filterForm.customer_name = '';
             router.get(route('admin.history-order.index'), {}, {
                 preserveState: true,
                 preserveScroll: true,

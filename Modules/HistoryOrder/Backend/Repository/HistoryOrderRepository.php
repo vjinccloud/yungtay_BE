@@ -24,22 +24,16 @@ class HistoryOrderRepository extends BaseRepository
             $query->whereDate('updated_at', $request->input('date'));
         }
 
-        // 訂單名稱搜尋
-        if ($request->filled('order_name')) {
-            $keyword = $request->input('order_name');
-            $query->where('order_name', 'like', "%{$keyword}%");
+        // 縣市地區搜尋
+        if ($request->filled('case_area')) {
+            $keyword = $request->input('case_area');
+            $query->where('case_area', 'like', "%{$keyword}%");
         }
 
         // 系列型號篩選
         if ($request->filled('series_model')) {
             $keyword = $request->input('series_model');
             $query->where('series_model', 'like', "%{$keyword}%");
-        }
-
-        // 客戶名稱搜尋
-        if ($request->filled('customer_name')) {
-            $keyword = $request->input('customer_name');
-            $query->where('customer_name', 'like', "%{$keyword}%");
         }
 
         return $query->orderByDesc('updated_at')->paginate($perPage);
@@ -62,19 +56,14 @@ class HistoryOrderRepository extends BaseRepository
             $query->whereDate('updated_at', $request->input('date'));
         }
 
-        if ($request->filled('order_name')) {
-            $keyword = $request->input('order_name');
-            $query->where('order_name', 'like', "%{$keyword}%");
+        if ($request->filled('case_area')) {
+            $keyword = $request->input('case_area');
+            $query->where('case_area', 'like', "%{$keyword}%");
         }
 
         if ($request->filled('series_model')) {
             $keyword = $request->input('series_model');
             $query->where('series_model', 'like', "%{$keyword}%");
-        }
-
-        if ($request->filled('sales_name')) {
-            $keyword = $request->input('sales_name');
-            $query->where('sales_name', 'like', "%{$keyword}%");
         }
 
         return $query->orderByDesc('updated_at')->get();

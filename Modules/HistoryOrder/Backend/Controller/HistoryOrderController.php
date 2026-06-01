@@ -31,9 +31,8 @@ class HistoryOrderController extends Controller
             'entranceSpecFields' => HistoryOrder::getEntranceSpecFields(),
             'filters'            => [
                 'date'           => $request->input('date', ''),
-                'order_name'     => $request->input('order_name', ''),
+                'case_area'      => $request->input('case_area', ''),
                 'series_model'   => $request->input('series_model', ''),
-                'customer_name'  => $request->input('customer_name', ''),
             ],
         ]);
     }

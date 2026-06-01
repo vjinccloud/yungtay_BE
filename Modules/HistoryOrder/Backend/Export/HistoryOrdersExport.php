@@ -20,16 +20,16 @@ class HistoryOrdersExport implements FromCollection, WithHeadings, WithMapping
 
     public function headings(): array
     {
-        return ['更新日期', '訂單', '型號', '客戶名稱'];
+        return ['更新日期', '客戶名稱', '型號', '縣市'];
     }
 
     public function map($item): array
     {
         return [
             optional($item->updated_at)->format('Y/m/d') ?? '',
-            $item->order_name ?? '',
-            $item->series_model ?? '',
             $item->customer_name ?? '',
+            $item->series_model ?? '',
+            $item->case_area ?? '',
         ];
     }
 }
