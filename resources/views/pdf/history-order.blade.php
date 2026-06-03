@@ -166,11 +166,11 @@ td, th, div, span, p { font-family: notosanstc, sans-serif; }
             </table>
 
             {{-- 電梯渲染圖 --}}
-            @if ($order->elevator_image && $elevatorImageBase64)
+            @if ($elevatorImagePath)
             <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
             <tr>
                 <td align="center" style="padding-bottom:12px;">
-                    <img src="{{ $elevatorImageBase64 }}" style="max-width:100%; max-height:240px;" alt="">
+                    <img src="{{ $elevatorImagePath }}" style="max-width:100%; max-height:240px;" alt="">
                 </td>
             </tr>
             </table>

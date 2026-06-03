@@ -79,14 +79,13 @@ class HistoryOrderController extends Controller
                              ->with('result', ['status' => false, 'msg' => '訂單不存在']);
         }
 
-        // 將電梯圖片轉為 base64 以便嵌入 PDF
-        $elevatorImageBase64 = '';
+        // 電梯渲染圖：直接給 mPDF 本機檔案路徑（讓 mPDF 自己讀檔），
+        // 不用 base64 內嵌，避免大張圖把 HTML 撐破 pcre.backtrack_limit。
+        $elevatorImagePath = '';
         if ($order->elevator_image) {
             $imagePath = public_path(ltrim($order->elevator_image, '/'));
             if (file_exists($imagePath)) {
-                $mime = mime_content_type($imagePath);
-                $data = base64_encode(file_get_contents($imagePath));
-                $elevatorImageBase64 = "data:{$mime};base64,{$data}";
+                $elevatorImagePath = $imagePath;
             }
         }
 
@@ -109,13 +108,17 @@ class HistoryOrderController extends Controller
             'order'               => $order,
             'cabinSpecFields'     => HistoryOrder::getCabinSpecFields(),
             'entranceSpecFields'  => HistoryOrder::getEntranceSpecFields(),
-            'elevatorImageBase64' => $elevatorImageBase64,
+            'elevatorImagePath'   => $elevatorImagePath,
             'iconBase64Map'       => $iconBase64Map,
         ])->render();
 
         // 移除 BOM 及無效 UTF-8 字元
         $html = preg_replace('/\xEF\xBB\xBF/', '', $html);
         $html = mb_convert_encoding($html, 'UTF-8', 'UTF-8');
+
+        // 放寬 PCRE 限制，避免長 HTML 觸發 mPDF 的 backtrack_limit 例外（保險用）
+        ini_set('pcre.backtrack_limit', '10000000');
+        ini_set('pcre.recursion_limit', '10000000');
 
         $mpdf = new \Mpdf\Mpdf([
             'format'        => 'A4-L',
